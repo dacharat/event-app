@@ -25,14 +25,24 @@ const EventCard = ({ detail, navigation }) => {
       <View style={styles.inline}>
         <Text style={styles.title}>{detail.title}</Text>
         <View style={styles.buttonInline}>
-          <Button title="⭐️" onPress={() => {}} />
-          <Button title="+" onPress={() => {}} />
+          <CustomButton title="⭐️" />
+          <CustomButton title="+" />
+          {/* <Button title="⭐️" onPress={() => {}} />
+          <Button title="+" onPress={() => {}} /> */}
         </View>
       </View>
       <Text style={styles.description}>
         {detail.description.substring(0, 50)}
       </Text>
       <Text style={styles.time}>{detail.date + " " + detail.time}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const CustomButton = ({ title }) => {
+  return (
+    <TouchableOpacity style={styles.buttonInline} onPress={() => {}}>
+      <Text>{title}</Text>
     </TouchableOpacity>
   );
 };

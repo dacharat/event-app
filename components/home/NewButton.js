@@ -1,15 +1,15 @@
-import React from 'react'
-import {View, Button, StyleSheet} from 'react-native'
+import React from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const NewButton = ({ navigation }) => {
   return (
-    <View style={styles.circle}>
-      <Button
-        style={styles.text}
-        title="+"
-        onPress={() => navigation.navigate("NewEvent")}
-      />
-    </View>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.circle}
+      onPress={() => navigation.navigate("NewEvent")}
+    >
+      <Text style={styles.text}>+</Text>
+    </TouchableOpacity>
   );
 };
 
@@ -23,11 +23,14 @@ const styles = StyleSheet.create({
     right: 15,
     bottom: 15,
     borderRadius: 100,
-    backgroundColor: 'lightblue'
+    backgroundColor: "lightblue"
   },
   text: {
-    fontSize: 30
+    color: 'white',
+    marginTop: -5,
+    fontSize: 50,
+    fontWeight: "200"
   }
 });
 
-export default NewButton
+export default NewButton;

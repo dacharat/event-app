@@ -4,11 +4,11 @@ import EventCard from "./EventCard";
 
 import { connect } from "react-redux";
 
-const EventList = ({ events }) => {
+const EventList = ({ events, navigation }) => {
   return (
     <ScrollView style={styles.contentContainer}>
       {events.map((event, i) => (
-        <EventCard key={i} detail={event} />
+        <EventCard key={i} navigation={navigation} detail={event} />
       ))}
     </ScrollView>
   );

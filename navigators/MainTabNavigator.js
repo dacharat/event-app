@@ -9,10 +9,12 @@ import NotificationTab from "../tabs/NotificationTab";
 
 import TabBarIcon from "../components/TabBarIcon";
 import NewEvent from "../components/home/NewEvent";
+import EventDetail from "../components/home/EventDetail";
 
 const HomeStackTab = createStackNavigator({
   Home: HomeTab,
-  NewEvent: NewEvent
+  NewEvent: NewEvent,
+  Detail: EventDetail
 });
 
 HomeStackTab.navigationOptions = {

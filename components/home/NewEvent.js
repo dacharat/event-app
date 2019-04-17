@@ -27,7 +27,7 @@ const options = {
       label: "Time",
       mode: "time",
       config: {
-        format: date => moment(date).format("HH:MM A")
+        format: date => moment(date).format("HH:mm")
       }
     }
   }
@@ -37,14 +37,20 @@ class NewEvent extends React.Component {
   handleSubmit = () => {
     const value = this._form.getValue();
     const data = {
-      name: value.title,
+      title: value.title,
       description: value.description,
       date: moment(value.date).format("DD MMM YY"),
-      time: moment(value.date).format("DD MMM YY"),
+      time: moment(value.time).format("HH:mm"),
       img: "http://i.imgur.com/UTmTK9i.png",
       category: "Test"
     };
+    // console.log(value.date);
+    // console.log(value.time);
+    // console.log(moment(value.date).format("DD MMM YY"));
+    // console.log(moment(value.time).format("HH:mm"));
+    
     this.props.addEvent(data);
+    this.props.navigation.navigate("Home");
   };
 
   render() {

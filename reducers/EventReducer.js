@@ -1,43 +1,48 @@
 const INITIAL_STATE = [
   {
-    name: "Event1",
+    title: "Event1",
     img: "http://i.imgur.com/UTmTK9i.png",
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test"
+    category: "Test",
+    createBy: 'Jack'
   },
   {
-    name: "Event2",
+    title: "Event2",
     img: "http://i.imgur.com/UTmTK9i.png",
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test"
+    category: "Test",
+    createBy: 'Jack'
   },
   {
-    name: "Event3",
+    title: "Event3",
     img: "http://i.imgur.com/UTmTK9i.png",
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test"
+    category: "Test",
+    createBy: 'Jack'
   },
   {
-    name: "Event4",
+    title: "Event4",
     img: "http://i.imgur.com/UTmTK9i.png",
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test"
+    category: "Test",
+    createBy: 'Jack'
   },
   {
-    name: "Event5",
+    title: "Event5",
     img: "http://i.imgur.com/UTmTK9i.png",
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test"
+    category: "Test",
+    createBy: 'Jack'
   }
 ];
 

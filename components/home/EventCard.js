@@ -1,9 +1,19 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Button } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Button,
+  TouchableOpacity
+} from "react-native";
 
-const EventCard = ({ detail }) => {
+const EventCard = ({ detail, navigation }) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Detail", { detail: detail })}
+      style={styles.card}
+    >
       <Image
         style={styles.image}
         source={
@@ -13,15 +23,17 @@ const EventCard = ({ detail }) => {
         }
       />
       <View style={styles.inline}>
-        <Text style={styles.title}>{detail.name}</Text>
+        <Text style={styles.title}>{detail.title}</Text>
         <View style={styles.buttonInline}>
           <Button title="⭐️" onPress={() => {}} />
           <Button title="+" onPress={() => {}} />
         </View>
       </View>
-      <Text style={styles.description}>{detail.description}</Text>
+      <Text style={styles.description}>
+        {detail.description.substring(0, 50)}
+      </Text>
       <Text style={styles.time}>{detail.date + " " + detail.time}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

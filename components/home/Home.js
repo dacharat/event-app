@@ -6,7 +6,7 @@ import NewButton from './NewButton';
 const Home = ({navigation}) => {
   return (
     <>
-      <EventList />
+      <EventList navigation={navigation} />
       <NewButton navigation={navigation} />
     </>
   );

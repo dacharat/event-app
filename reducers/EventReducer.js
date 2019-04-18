@@ -5,8 +5,8 @@ const INITIAL_STATE = [
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test",
-    createBy: 'Jack'
+    category: "Sports",
+    createBy: "Jack"
   },
   {
     title: "Event2",
@@ -14,8 +14,8 @@ const INITIAL_STATE = [
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test",
-    createBy: 'Jack'
+    category: "Sports",
+    createBy: "Jack"
   },
   {
     title: "Event3",
@@ -23,8 +23,8 @@ const INITIAL_STATE = [
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test",
-    createBy: 'Jack'
+    category: "Education",
+    createBy: "Jack"
   },
   {
     title: "Event4",
@@ -32,8 +32,8 @@ const INITIAL_STATE = [
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test",
-    createBy: 'Jack'
+    category: "Education",
+    createBy: "Jack"
   },
   {
     title: "Event5",
@@ -41,17 +41,17 @@ const INITIAL_STATE = [
     description: "this is event",
     date: "20/20/20",
     time: "20.00",
-    category: "Test",
-    createBy: 'Jack'
+    category: "Activities",
+    createBy: "Jack"
   }
 ];
 
 export const eventReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'NEW_EVENT':
-      newState = [...state, action.payload]
-      return newState
+    case "NEW_EVENT":
+      newState = [...state, action.payload];
+      return newState;
     default:
-      return state
+      return state;
   }
 };

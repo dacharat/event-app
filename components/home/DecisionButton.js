@@ -1,22 +1,20 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
-const DecisionButton = ({ detail }) => {
+const DecisionButton = ({ detail, addJoin, addStar }) => {
   return (
     <View style={styles.container}>
       <View style={styles.button}>
         <TouchableOpacity
           style={styles.favourite}
-          onPress={() => alert("Favourite " + detail.title)}
+          onPress={() => addStar(detail)}
         >
           <Text style={styles.favouriteText}>⭐️</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.button}>
-        <TouchableOpacity
-          style={styles.add}
-          onPress={() => alert("Add " + detail.title)}
-        >
+        <TouchableOpacity style={styles.add} onPress={() => addJoin(detail)}>
           <Text style={styles.addText}>+</Text>
         </TouchableOpacity>
       </View>
@@ -72,4 +70,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DecisionButton;
+const mapDispatchToProps = dispatch => {
+  return {
+    addStar: event =>
+      dispatch({ type: "ADD_STARS_EVENT", payload: event.title }),
+    addJoin: event => dispatch({ type: "JOIN_EVENT", payload: event.title })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(DecisionButton);

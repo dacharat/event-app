@@ -10,6 +10,7 @@ import NotificationTab from "../tabs/NotificationTab";
 import TabBarIcon from "../components/TabBarIcon";
 import NewEvent from "../components/home/NewEvent";
 import EventDetail from "../components/home/EventDetail";
+import UserTab from "../tabs/UserTab";
 
 const HomeStackTab = createStackNavigator({
   Home: HomeTab,
@@ -45,7 +46,22 @@ NotificationStackTab.navigationOptions = {
   )
 };
 
+const UserStackTab = createStackNavigator({
+  User: UserTab
+});
+
+UserStackTab.navigationOptions = {
+  tabBarLabel: "User",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+    />
+  )
+};
+
 export default createBottomTabNavigator({
   HomeStackTab,
-  NotificationStackTab
+  NotificationStackTab,
+  UserStackTab
 });

@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Button,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 
-const EventCard = ({ detail, navigation }) => {
+const EventCard = ({ detail, navigation, addStar, addJoin }) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Detail", { detail: detail })}
@@ -25,10 +19,8 @@ const EventCard = ({ detail, navigation }) => {
       <View style={styles.inline}>
         <Text style={styles.title}>{detail.title}</Text>
         <View style={styles.buttonInline}>
-          <CustomButton title="⭐️" />
-          <CustomButton title="+" />
-          {/* <Button title="⭐️" onPress={() => {}} />
-          <Button title="+" onPress={() => {}} /> */}
+          <CustomButton title="⭐️" onPress={() => addStar(detail)} />
+          <CustomButton title="+" onPress={() => addJoin(detail)} />
         </View>
       </View>
       <Text style={styles.description}>
@@ -39,9 +31,9 @@ const EventCard = ({ detail, navigation }) => {
   );
 };
 
-const CustomButton = ({ title }) => {
+const CustomButton = ({ title, onPress }) => {
   return (
-    <TouchableOpacity style={styles.buttonInline} onPress={() => {}}>
+    <TouchableOpacity style={styles.buttonInline} onPress={onPress}>
       <Text>{title}</Text>
     </TouchableOpacity>
   );
@@ -81,4 +73,15 @@ const styles = StyleSheet.create({
   time: { margin: 10, marginTop: 0 }
 });
 
-export default EventCard;
+const mapDispatchToProps = dispatch => {
+  return {
+    addStar: event =>
+      dispatch({ type: "ADD_STARS_EVENT", payload: event.title }),
+    addJoin: event => dispatch({ type: "JOIN_EVENT", payload: event.title })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EventCard);

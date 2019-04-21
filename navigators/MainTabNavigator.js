@@ -11,6 +11,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import NewEvent from "../components/home/NewEvent";
 import EventDetail from "../components/home/EventDetail";
 import UserTab from "../tabs/UserTab";
+import EditProfile from "../components/user/EditProfile";
 
 const HomeStackTab = createStackNavigator({
   Home: HomeTab,
@@ -47,7 +48,8 @@ NotificationStackTab.navigationOptions = {
 };
 
 const UserStackTab = createStackNavigator({
-  User: UserTab
+  User: UserTab,
+  EditProfile: EditProfile
 });
 
 UserStackTab.navigationOptions = {

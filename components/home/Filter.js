@@ -14,11 +14,18 @@ const items = [
 class Filter extends React.Component {
   state = {
     modalVisible: false,
-    selectedItems: []
+    selectedItems: this.props.filter
   };
 
-  componentDidMount() {
-    this.setState({ selectedItems: this.props.filter });
+  // componentDidMount() {
+  //   this.setState({ selectedItems: this.props.filter });
+  // }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filter !== prevProps.filter) {
+      this.setState({ selectedItems: this.props.filter });
+      console.log("change state");
+    }
   }
 
   toggleModal = () => {
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontWeight: "800"
   },
   modal: {

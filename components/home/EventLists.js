@@ -12,6 +12,12 @@ class EventList extends React.Component {
     eventFilter: this.props.auth.interest
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.auth.interest !== prevProps.auth.interest) {
+      this.setState({ eventFilter: this.props.auth.interest });
+    }
+  }
+
   callbackFilter = filter => {
     this.setState({ eventFilter: filter });
   };
@@ -23,8 +29,8 @@ class EventList extends React.Component {
     );
 
     auth.join.map(eventJoin => {
-      filter = filter.filter(f => f.title !== eventJoin)
-    })
+      filter = filter.filter(f => f.title !== eventJoin);
+    });
 
     return filter.map((event, i) => (
       <EventCard key={i} navigation={navigation} detail={event} />

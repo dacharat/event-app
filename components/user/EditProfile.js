@@ -15,7 +15,7 @@ class EditProfile extends React.Component {
     selectedItems: this.props.auth.interest
   };
   render() {
-    const { auth, update } = this.props;
+    const { update } = this.props;
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.label}>Change Interested Event</Text>

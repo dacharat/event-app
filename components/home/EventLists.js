@@ -13,7 +13,7 @@ class EventList extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.auth.interest !== prevProps.auth.interest) {
+    if (this.props.auth !== prevProps.auth) {
       this.setState({ eventFilter: this.props.auth.interest });
     }
   }

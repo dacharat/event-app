@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 const User = ({ navigation, auth }) => {
   return (
-    <ScrollView>
+    <View>
       <View style={styles.profile}>
         <Image
           style={styles.profileImg}
@@ -23,21 +23,33 @@ const User = ({ navigation, auth }) => {
         />
         <Text style={styles.profileName}>{auth.username}</Text>
       </View>
-      <TouchableOpacity
-        style={styles.editProfile}
-        onPress={() => {
-          navigation.navigate("EditProfile", { auth: auth });
-        }}
-      >
-        <Text>Edit Profile</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfile} onPress={() => {}}>
-        <Text>Star Events</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfile} onPress={() => {}}>
-        <Text>My Event</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      <ScrollView>
+        <TouchableOpacity
+          style={styles.editProfile}
+          onPress={() => {
+            navigation.navigate("EditProfile");
+          }}
+        >
+          <Text>Edit Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.editProfile}
+          onPress={() => {
+            navigation.navigate("StarEvents");
+          }}
+        >
+          <Text>Star Events</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.editProfile}
+          onPress={() => {
+            navigation.navigate("JoinEvents");
+          }}
+        >
+          <Text>My Event</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 };
 

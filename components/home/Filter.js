@@ -17,14 +17,9 @@ class Filter extends React.Component {
     selectedItems: this.props.filter
   };
 
-  // componentDidMount() {
-  //   this.setState({ selectedItems: this.props.filter });
-  // }
-
   componentDidUpdate(prevProps) {
     if (this.props.filter !== prevProps.filter) {
       this.setState({ selectedItems: this.props.filter });
-      console.log("change state");
     }
   }
 

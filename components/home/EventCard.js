@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
-const EventCard = ({ detail, navigation, addStar, addJoin }) => {
+const EventCard = ({ detail, navigation, addStar, addJoin, auth }) => {  
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Detail", { detail: detail })}
@@ -19,7 +19,11 @@ const EventCard = ({ detail, navigation, addStar, addJoin }) => {
       <View style={styles.inline}>
         <Text style={styles.title}>{detail.title}</Text>
         <View style={styles.buttonInline}>
-          <CustomButton title="⭐️" onPress={() => addStar(detail)} />
+          <CustomButton
+            title="⭐️"
+            onPress={() => addStar(detail)}
+            star={auth.stars.length > 0 && auth.stars.includes(detail.title)}
+          />
           <CustomButton title="+" onPress={() => addJoin(detail)} />
         </View>
       </View>
@@ -31,9 +35,12 @@ const EventCard = ({ detail, navigation, addStar, addJoin }) => {
   );
 };
 
-const CustomButton = ({ title, onPress }) => {
+const CustomButton = ({ title, onPress, star = false }) => {
   return (
-    <TouchableOpacity style={styles.buttonInline} onPress={onPress}>
+    <TouchableOpacity
+      style={{ ...styles.button, backgroundColor: star ? "#f7ff70" : "" }}
+      onPress={onPress}
+    >
       <Text>{title}</Text>
     </TouchableOpacity>
   );
@@ -70,9 +77,24 @@ const styles = StyleSheet.create({
     marginRight: 30,
     flexDirection: "row"
   },
-  time: { margin: 10, marginTop: 0 }
+  button: {
+    marginTop: 10,
+    marginRight: 30,
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 100
+  },
+  time: {
+    margin: 10,
+    marginTop: 0
+  }
 });
 
+const mapStateToProps = state => {
+  return { auth: state.auth };
+};
 const mapDispatchToProps = dispatch => {
   return {
     addStar: event =>
@@ -82,6 +104,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(EventCard);

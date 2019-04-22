@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   username: "Jack",
   password: "123456",
   interest: ["Sports", "Entertainment"],
-  stars: [],
+  stars: ["Event1"],
   join: [],
   credit: 100
 };
@@ -10,6 +10,7 @@ const INITIAL_STATE = {
 export const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "ADD_STARS_EVENT":
+      if (state.stars.includes(action.payload)) return state;
       newState = { ...state, stars: [...state.stars, action.payload] };
       return newState;
     case "REMOVE_STARS_EVENT":

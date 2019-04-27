@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, Button, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import ModalSelector from "react-native-modal-selector";
-
+import { createEvent } from "../../store/action/EventAction";
 import t from "tcomb-form-native";
 import moment from "moment";
 
@@ -66,7 +66,7 @@ class NewEvent extends React.Component {
       category: this.state.category
     };
 
-    this.props.addEvent(data);
+    this.props.createEvent(data);
     this.props.navigation.navigate("Home");
   };
 
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addEvent: data => {
-      dispatch({ type: "NEW_EVENT", payload: data });
+    createEvent: data => {
+      dispatch(createEvent(data));
     }
   };
 };

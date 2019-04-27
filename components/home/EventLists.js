@@ -1,9 +1,11 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import EventCard from "./EventCard";
-
-import { connect } from "react-redux";
 import Filter from "./Filter";
+
+import { firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 // const DEFAULT_FILTER = ["Sports", "Education", "Entertainment", "Activities"];
 
@@ -23,18 +25,35 @@ class EventList extends React.Component {
   };
 
   filterWithRemoveJoinEvent = () => {
-    const { events, navigation, auth } = this.props;
-    let filter = events.filter(event =>
-      this.state.eventFilter.some(e => e === event.category)
+    const { events, navigation, auth, firebaseEvents } = this.props;
+
+    const eventKeys = Object.keys(firebaseEvents);
+
+    let filter = eventKeys.filter(key =>
+      this.state.eventFilter.some(e => e === firebaseEvents[key].category)
     );
 
     auth.join.map(eventJoin => {
       filter = filter.filter(f => f.title !== eventJoin);
     });
 
-    return filter.map((event, i) => (
-      <EventCard key={i} navigation={navigation} detail={event} />
+    console.log(filter);
+    
+    return filter.map((key, i) => (
+      <EventCard key={i} navigation={navigation} detail={firebaseEvents[key]} />
     ));
+
+    // let filter = events.filter(event =>
+    //   this.state.eventFilter.some(e => e === event.category)
+    // );
+
+    // auth.join.map(eventJoin => {
+    //   filter = filter.filter(f => f.title !== eventJoin);
+    // });
+
+    // return filter.map((event, i) => (
+    //   <EventCard key={i} navigation={navigation} detail={event} />
+    // ));
   };
 
   render() {
@@ -45,7 +64,7 @@ class EventList extends React.Component {
           callback={this.callbackFilter}
         />
         <ScrollView style={styles.contentContainer}>
-          {this.filterWithRemoveJoinEvent()}
+          {this.props.firebaseEvents && this.filterWithRemoveJoinEvent()}
         </ScrollView>
       </>
     );
@@ -60,7 +79,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { events: state.events, auth: state.auth };
+  return {
+    events: state.events,
+    auth: state.auth,
+    firebaseEvents: state.firebase.data.events
+  };
 };
 
-export default connect(mapStateToProps)(EventList);
+export default compose(
+  connect(mapStateToProps),
+  firebaseConnect(["events"])
+)(EventList);

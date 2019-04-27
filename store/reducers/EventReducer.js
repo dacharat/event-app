@@ -1,56 +1,10 @@
-const INITIAL_STATE = [
-  {
-    title: "Event1",
-    img: "http://i.imgur.com/UTmTK9i.png",
-    description: "this is event",
-    date: "20/20/20",
-    time: "20.00",
-    category: "Sports",
-    createBy: "Jack"
-  },
-  {
-    title: "Event2",
-    img: "http://i.imgur.com/UTmTK9i.png",
-    description: "this is event",
-    date: "20/20/20",
-    time: "20.00",
-    category: "Sports",
-    createBy: "Jack"
-  },
-  {
-    title: "Event3",
-    img: "http://i.imgur.com/UTmTK9i.png",
-    description: "this is event",
-    date: "20/20/20",
-    time: "20.00",
-    category: "Education",
-    createBy: "Jack"
-  },
-  {
-    title: "Event4",
-    img: "http://i.imgur.com/UTmTK9i.png",
-    description: "this is event",
-    date: "20/20/20",
-    time: "20.00",
-    category: "Education",
-    createBy: "Jack"
-  },
-  {
-    title: "Event5",
-    img: "http://i.imgur.com/UTmTK9i.png",
-    description: "this is event",
-    date: "20/20/20",
-    time: "20.00",
-    category: "Activities",
-    createBy: "Jack"
-  }
-];
-
+INITIAL_STATE = { createToast: false };
 export const eventReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "NEW_EVENT":
-      newState = [...state, action.payload];
-      return newState;
+    case "CREATE_NEW_EVENT":
+      state = { createToast: false };
+      console.log("Create Success");
+      return state;
     default:
       return state;
   }

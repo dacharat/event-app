@@ -25,6 +25,15 @@ export const authReducer = (state = INITIAL_STATE, action) => {
     case "UPDATE_PROFILE":
       newState = { ...state, interest: action.payload };
       return newState;
+    case "CREATE_ACCOUNT_SUCCESS":
+      console.log("create account success");
+      return state;
+    case "SIGNOUT_SUCCESS":
+      console.log("logout success");
+      return state;
+    case "LOGIN_SUCCESS":
+      console.log("login success");
+      return state;
     default:
       return state;
   }

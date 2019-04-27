@@ -8,8 +8,12 @@ import {
   TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
+import { logout } from "../../store/action/AuthAction";
 
-const User = ({ navigation, auth }) => {
+const User = ({ navigation, auth, profile, logout }) => {
+  console.log(auth);
+  console.log(profile);
+
   return (
     <View>
       <View style={styles.profile}>
@@ -21,7 +25,7 @@ const User = ({ navigation, auth }) => {
               : require("../../assets/no-profile-img.png")
           }
         />
-        <Text style={styles.profileName}>{auth.username}</Text>
+        <Text style={styles.profileName}>{profile.username}</Text>
       </View>
       <ScrollView>
         <TouchableOpacity
@@ -47,6 +51,14 @@ const User = ({ navigation, auth }) => {
           }}
         >
           <Text>My Event</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.logout}
+          onPress={() => {
+            logout();
+          }}
+        >
+          <Text>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -82,11 +94,25 @@ const styles = StyleSheet.create({
     height: 75,
     alignItems: "center",
     justifyContent: "center"
+  },
+  logout: {
+    backgroundColor: "red",
+    borderBottomColor: "black",
+    borderBottomWidth: 0.167,
+    height: 75,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return { auth: state.firebase.auth, profile: state.firebase.profile };
+};
+const mapDispatchToProps = dispatch => {
+  return { logout: () => dispatch(logout()) };
 };
 
-export default connect(mapStateToProps)(User);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(User);

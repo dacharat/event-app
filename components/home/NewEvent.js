@@ -55,6 +55,13 @@ class NewEvent extends React.Component {
   state = {
     category: "Sports"
   };
+
+  componentDidUpdate(prevProps) {
+    if(this.props.toast != prevProps.toast) {
+      
+    }
+  }
+
   handleSubmit = () => {
     const value = this._form.getValue();
     const data = {
@@ -66,7 +73,7 @@ class NewEvent extends React.Component {
       category: this.state.category
     };
 
-    this.props.createEvent(data);
+    this.props.createEvent(data)
     this.props.navigation.navigate("Home");
   };
 
@@ -80,14 +87,12 @@ class NewEvent extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Form type={Event} options={options} ref={c => (this._form = c)} />
-
         <Text style={styles.category}>Category</Text>
         <ModalSelector
           data={data}
           initValue={this.state.category}
           onChange={option => this.setState({ category: option.label })}
         />
-
         <Button title="Create New Event" onPress={this.handleSubmit} />
       </ScrollView>
     );
@@ -103,6 +108,9 @@ const styles = StyleSheet.create({
   category: { fontWeight: "500", fontSize: 18 }
 });
 
+const mapStateToProps = state => {
+  return {toast: state.event.createToast}
+}
 const mapDispatchToProps = dispatch => {
   return {
     createEvent: data => {
@@ -112,6 +120,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewEvent);

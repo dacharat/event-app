@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return { auth: state.firebase.auth, profile: state.firebase.profile };
 };
 
 const mapDispatchToProps = dispatch => {

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import EventCard from "./EventCard";
 import Filter from "./Filter";
 
-import { firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 
@@ -37,23 +37,9 @@ class EventList extends React.Component {
       filter = filter.filter(f => f.title !== eventJoin);
     });
 
-    console.log(filter);
-    
     return filter.map((key, i) => (
       <EventCard key={i} navigation={navigation} detail={firebaseEvents[key]} />
     ));
-
-    // let filter = events.filter(event =>
-    //   this.state.eventFilter.some(e => e === event.category)
-    // );
-
-    // auth.join.map(eventJoin => {
-    //   filter = filter.filter(f => f.title !== eventJoin);
-    // });
-
-    // return filter.map((event, i) => (
-    //   <EventCard key={i} navigation={navigation} detail={event} />
-    // ));
   };
 
   render() {

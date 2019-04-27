@@ -1,6 +1,4 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import AppNavigator from "./navigators/AppNavigator";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -8,6 +6,7 @@ import MainReducer from "./store/reducers/MainReducer";
 import fbConfig from "./config/config";
 import thunk from "redux-thunk";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+import MainPage from "./components/MainPage";
 
 const store = createStore(
   MainReducer,
@@ -21,17 +20,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <AppNavigator />
-        </View>
+        <MainPage />
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  }
-});

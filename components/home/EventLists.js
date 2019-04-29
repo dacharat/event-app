@@ -11,12 +11,12 @@ import { connect } from "react-redux";
 
 class EventList extends React.Component {
   state = {
-    eventFilter: this.props.auth.interest
+    eventFilter: []
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.auth !== prevProps.auth) {
-      this.setState({ eventFilter: this.props.auth.interest });
+    if (this.props.profile !== prevProps.profile) {
+      this.setState({ eventFilter: this.props.profile.interest });
     }
   }
 
@@ -25,7 +25,7 @@ class EventList extends React.Component {
   };
 
   filterWithRemoveJoinEvent = () => {
-    const { events, navigation, auth, firebaseEvents } = this.props;
+    const { navigation, firebaseEvents, profile } = this.props;
 
     const eventKeys = Object.keys(firebaseEvents);
 
@@ -33,12 +33,13 @@ class EventList extends React.Component {
       this.state.eventFilter.some(e => e === firebaseEvents[key].category)
     );
 
-    auth.join.map(eventJoin => {
-      filter = filter.filter(f => f.title !== eventJoin);
-    });
+    profile.join &&
+      profile.join.map(eventJoin => {
+        filter = filter.filter(f => f !== eventJoin);
+      });
 
     return filter.map((key, i) => (
-      <EventCard key={i} navigation={navigation} detail={firebaseEvents[key]} />
+      <EventCard key={i} navigation={navigation} eventID={key} detail={firebaseEvents[key]} />
     ));
   };
 
@@ -66,8 +67,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.events,
-    auth: state.auth,
+    profile: state.firebase.profile,
+    auth: state.firebase.auth,
     firebaseEvents: state.firebase.data.events
   };
 };

@@ -1,10 +1,19 @@
 import React from "react";
-import { ScrollView, Button, StyleSheet, Text } from "react-native";
+import {
+  ScrollView,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image
+} from "react-native";
 import { connect } from "react-redux";
 import ModalSelector from "react-native-modal-selector";
 import { createEvent } from "../../store/action/EventAction";
 import t from "tcomb-form-native";
 import moment from "moment";
+import defaultImg from "../../assets/no_image.jpg";
+import { ImagePicker, Permissions } from "expo";
 
 const Form = t.form.Form;
 
@@ -53,14 +62,14 @@ const options = {
 
 class NewEvent extends React.Component {
   state = {
-    category: "Sports"
+    category: "Sports",
+    imageURI: defaultImg
   };
 
-  componentDidUpdate(prevProps) {
-    if(this.props.toast != prevProps.toast) {
-      
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.toast != prevProps.toast) {
+  //   }
+  // }
 
   handleSubmit = () => {
     const value = this._form.getValue();
@@ -73,8 +82,44 @@ class NewEvent extends React.Component {
       category: this.state.category
     };
 
-    this.props.createEvent(data)
+    this.props.createEvent(data);
     this.props.navigation.navigate("Home");
+  };
+
+  onSelectImageClicked = async () => {
+    const permissions = Permissions.CAMERA_ROLL;
+    const { status } = await Permissions.askAsync(permissions);
+
+    console.log(`[ pickFromCamera ] ${permissions} access: ${status}`);
+    if (status !== "granted") {
+      Sentry.captureException(
+        new Error(`[ pickFromCamera ] ${permissions} access: ${status}`)
+      );
+    } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
+
+      if (!result.cancelled) {
+        this.setState({ imageURI: result });
+      }
+      // let image = await ImagePicker.launchCameraAsync().catch(error =>
+      //   console.log({ error })
+      // );
+      // this.maybeEmailImage(image);
+    }
+
+    // if (result.some(({ status }) => status == "granted")) {
+    //   let result = await ImagePicker.launchImageLibraryAsync({
+    //     allowsEditing: true,
+    //     aspect: [4, 3]
+    //   });
+
+    //   if (!result.cancelled) {
+    //     this.setState({ imageURI: result });
+    //   }
+    // }
   };
 
   render() {
@@ -86,7 +131,16 @@ class NewEvent extends React.Component {
     ];
     return (
       <ScrollView style={styles.container}>
-        <Form type={Event} options={options} ref={c => (this._form = c)} />
+        {/* <Form type={Event} options={options} ref={c => (this._form = c)} /> */}
+
+        <Image source={this.state.imageURI} style={styles.image} />
+        <TouchableOpacity
+          style={styles.chooseImgButton}
+          onPress={() => this.onSelectImageClicked()}
+        >
+          <Text>Select Image</Text>
+        </TouchableOpacity>
+
         <Text style={styles.category}>Category</Text>
         <ModalSelector
           data={data}
@@ -105,12 +159,24 @@ const styles = StyleSheet.create({
     padding: 18,
     backgroundColor: "#ffffff"
   },
-  category: { fontWeight: "500", fontSize: 18 }
+  category: { fontWeight: "500", fontSize: 18 },
+  chooseImgButton: {
+    width: "100%",
+    borderWidth: 0.5,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain"
+  }
 });
 
 const mapStateToProps = state => {
-  return {toast: state.event.createToast}
-}
+  return {};
+};
 const mapDispatchToProps = dispatch => {
   return {
     createEvent: data => {

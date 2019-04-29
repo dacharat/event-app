@@ -11,9 +11,6 @@ import { connect } from "react-redux";
 import { logout } from "../../store/action/AuthAction";
 
 const User = ({ navigation, auth, profile, logout }) => {
-  console.log(auth);
-  console.log(profile);
-
   return (
     <View>
       <View style={styles.profile}>

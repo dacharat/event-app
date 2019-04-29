@@ -2,12 +2,13 @@ import React from "react";
 import { ScrollView, Text, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
-const JoinEvents = ({ auth }) => {
+const JoinEvents = ({ profile, events }) => {
+  const joinEvent = profile.join ? profile.join : [];
   return (
     <ScrollView>
-      {auth.join.map((j, i) => (
+      {joinEvent.map((join, i) => (
         <View key={i} style={styles.eventContent}>
-          <Text style={styles.eventTitle}>{j}</Text>
+          <Text style={styles.eventTitle}>{events[join].title}</Text>
         </View>
       ))}
     </ScrollView>
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return { profile: state.firebase.profile, events: state.firebase.data.events };
 };
 
 export default connect(mapStateToProps)(JoinEvents);

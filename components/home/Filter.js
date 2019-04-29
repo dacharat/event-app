@@ -29,7 +29,6 @@ class Filter extends React.Component {
 
   filterEvent = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
-    console.log(this.state.selectedItems);
 
     this.props.callback(this.state.selectedItems);
   };

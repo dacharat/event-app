@@ -2,6 +2,7 @@ import React from "react";
 import { ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import { connect } from "react-redux";
+import { updateInterest } from "../../store/action/AuthAction";
 
 const items = [
   { name: "Sports" },
@@ -12,10 +13,11 @@ const items = [
 
 class EditProfile extends React.Component {
   state = {
-    selectedItems: this.props.auth.interest
+    selectedItems: this.props.profile.interest
   };
   render() {
     const { update } = this.props;
+
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.label}>Change Interested Event</Text>
@@ -67,7 +69,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    update: interest => dispatch({ type: "UPDATE_PROFILE", payload: interest })
+    update: interest => dispatch(updateInterest(interest))
   };
 };
 

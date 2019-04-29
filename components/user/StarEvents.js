@@ -8,13 +8,14 @@ import {
   Alert
 } from "react-native";
 import { connect } from "react-redux";
+import { removeStarEent } from "../../store/action/AuthAction";
 
-const StarEvents = ({ auth, deleteStarEvent }) => {
+const StarEvents = ({ profile, deleteStarEvent, events }) => {
   return (
     <ScrollView>
-      {auth.stars.map((star, i) => (
+      {profile.stars.map((star, i) => (
         <View key={i} style={styles.eventContent}>
-          <Text style={styles.eventTitle}>{star}</Text>
+          <Text style={styles.eventTitle}>{events[star].title}</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     padding: 30,
     flex: 2,
     borderWidth: 0.5
-  }, 
+  },
   eventTitle: {
-    height: '100%',
+    height: "100%",
     fontSize: 25
   },
   button: {
@@ -65,12 +66,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return {
+    profile: state.firebase.profile,
+    events: state.firebase.data.events
+  };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    deleteStarEvent: event =>
-      dispatch({ type: "REMOVE_STARS_EVENT", payload: event })
+    deleteStarEvent: event => dispatch(removeStarEent(event))
   };
 };
 

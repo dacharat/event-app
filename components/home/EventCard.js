@@ -1,8 +1,17 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import { addJoinEvent, addStarEvent } from "../../store/action/AuthAction";
 
-const EventCard = ({ detail, navigation, addStar, addJoin, auth }) => {  
+const EventCard = ({
+  eventID,
+  detail,
+  navigation,
+  addStar,
+  addJoin,
+  profile
+}) => {
+  const stars = profile.stars ? profile.stars : [];
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Detail", { detail: detail })}
@@ -21,10 +30,10 @@ const EventCard = ({ detail, navigation, addStar, addJoin, auth }) => {
         <View style={styles.buttonInline}>
           <CustomButton
             title="⭐️"
-            onPress={() => addStar(detail)}
-            star={auth.stars.length > 0 && auth.stars.includes(detail.title)}
+            onPress={() => addStar(eventID)}
+            star={stars.includes(eventID)}
           />
-          <CustomButton title="+" onPress={() => addJoin(detail)} />
+          <CustomButton title="+" onPress={() => addJoin(eventID)} />
         </View>
       </View>
       <Text style={styles.description}>
@@ -38,7 +47,7 @@ const EventCard = ({ detail, navigation, addStar, addJoin, auth }) => {
 const CustomButton = ({ title, onPress, star = false }) => {
   return (
     <TouchableOpacity
-      style={{ ...styles.button, backgroundColor: star ? "#f7ff70" : "" }}
+      style={{ ...styles.button, backgroundColor: star ? "#f7ff70" : "white" }}
       onPress={onPress}
     >
       <Text>{title}</Text>
@@ -93,13 +102,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return { profile: state.firebase.profile };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addStar: event =>
-      dispatch({ type: "ADD_STARS_EVENT", payload: event.title }),
-    addJoin: event => dispatch({ type: "JOIN_EVENT", payload: event.title })
+    addStar: event => dispatch(addStarEvent(event)),
+    addJoin: event => dispatch(addJoinEvent(event))
   };
 };
 

@@ -5,92 +5,29 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  TextInput,
   View
 } from "react-native";
 import { connect } from "react-redux";
 import ModalSelector from "react-native-modal-selector";
 import { createEvent } from "../../store/action/EventAction";
-import t from "tcomb-form-native";
-import moment from "moment";
 import defaultImg from "../../assets/no_image.jpg";
 import { ImagePicker, Permissions } from "expo";
-
-const Form = t.form.Form;
-
-const Event = t.struct({
-  title: t.String,
-  date: t.Date,
-  time: t.Date,
-  description: t.String
-});
-
-const options = {
-  fields: {
-    description: {
-      multiline: true,
-      stylesheet: {
-        ...Form.stylesheet,
-        textbox: {
-          ...Form.stylesheet.textbox,
-          normal: {
-            ...Form.stylesheet.textbox.normal,
-            height: 150
-          },
-          error: {
-            ...Form.stylesheet.textbox.error,
-            height: 150
-          }
-        }
-      }
-    },
-    date: {
-      label: "Date",
-      mode: "date",
-      config: {
-        format: date => moment(date).format("DD-MMM-YYYY")
-      }
-    },
-    time: {
-      label: "Time",
-      mode: "time",
-      config: {
-        format: date => moment(date).format("HH:mm")
-      }
-    }
-  }
-};
+import DatePicker from "react-native-datepicker";
+import moment from "moment";
 
 class NewEvent extends React.Component {
   state = {
+    title: "",
+    description: "",
+    date: "",
+    time: "",
     category: "Sports",
-    imageURI: defaultImg
+    img: defaultImg
   };
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.toast != prevProps.toast) {
-  //   }
-  // }
-
   handleSubmit = () => {
-    const value = this._form.getValue();
-    const data = {
-      title: value.title,
-      description: value.description,
-      date: moment(value.date).format("DD MMM YY"),
-      time: moment(value.time).format("HH:mm"),
-      img: this.state.imageURI,
-      category: this.state.category
-    };
-
-    // const data = {
-    //   title: "value.title",
-    //   description: "value.description",
-    //   date: "000000",
-    //   time: "0000",
-    //   img: this.state.imageURI,
-    //   category: this.state.category
-    // };
-
+    const data = this.state;
     this.props.createEvent(data);
     this.props.navigation.navigate("Home");
   };
@@ -108,7 +45,7 @@ class NewEvent extends React.Component {
       let result = await ImagePicker.launchImageLibraryAsync();
 
       if (!result.cancelled) {
-        this.setState({ imageURI: result });
+        this.setState({ img: result });
       }
     }
   };
@@ -122,10 +59,52 @@ class NewEvent extends React.Component {
     ];
     return (
       <ScrollView style={styles.container}>
-        <Form type={Event} options={options} ref={c => (this._form = c)} />
+        <View style={styles.inlineForm}>
+          <Text style={styles.label}>Title</Text>
+          <TextInput
+            style={styles.inputText}
+            onChangeText={value => this.setState({ title: value })}
+            value={this.state.title}
+          />
+        </View>
+
+        <Text>Description</Text>
+        <TextInput
+          multiline
+          style={styles.textArea}
+          onChangeText={value => this.setState({ description: value })}
+          value={this.state.description}
+        />
+
+        <DatePicker
+          style={styles.datePicker}
+          date={this.state.date}
+          mode="date"
+          format="YYYY-MM-DD"
+          minDate={moment().format("YYYY-MM-DD")}
+          maxDate="2116-06-01"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          onDateChange={date => {
+            this.setState({ date: date });
+          }}
+        />
+
+        <DatePicker
+          style={styles.datePicker}
+          date={this.state.time}
+          mode="time"
+          format="HH:mm"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          minuteInterval={10}
+          onDateChange={time => {
+            this.setState({ time: time });
+          }}
+        />
 
         <View style={styles.imageUpload}>
-          <Image source={this.state.imageURI} style={styles.image} />
+          <Image source={this.state.img} style={styles.image} />
           <TouchableOpacity
             style={styles.chooseImgButton}
             onPress={() => this.onSelectImageClicked()}
@@ -186,6 +165,34 @@ const styles = StyleSheet.create({
   submitButtonText: {
     fontWeight: "bold",
     fontSize: 20
+  },
+  inputText: {
+    borderWidth: 0.5,
+    width: "100%",
+    height: 30,
+    padding: 5,
+    borderRadius: 10,
+    flex: 0.8
+  },
+  textArea: {
+    borderWidth: 0.5,
+    width: "100%",
+    height: 100,
+    padding: 5,
+    borderRadius: 10
+  },
+  inlineForm: {
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  datePicker: {
+    width: "100%",
+    margin: 5
+  },
+  label: {
+    flex: 0.2
   }
 });
 

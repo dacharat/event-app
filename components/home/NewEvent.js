@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import ModalSelector from "react-native-modal-selector";
@@ -72,13 +73,22 @@ class NewEvent extends React.Component {
   // }
 
   handleSubmit = () => {
-    const value = this._form.getValue();
+    // const value = this._form.getValue();
+    // const data = {
+    //   title: value.title,
+    //   description: value.description,
+    //   date: moment(value.date).format("DD MMM YY"),
+    //   time: moment(value.time).format("HH:mm"),
+    //   img: this.state.imageURI,
+    //   category: this.state.category
+    // };
+
     const data = {
-      title: value.title,
-      description: value.description,
-      date: moment(value.date).format("DD MMM YY"),
-      time: moment(value.time).format("HH:mm"),
-      img: "http://i.imgur.com/UTmTK9i.png",
+      title: "value.title",
+      description: "value.description",
+      date: "000000",
+      time: "0000",
+      img: this.state.imageURI,
       category: this.state.category
     };
 
@@ -96,30 +106,12 @@ class NewEvent extends React.Component {
         new Error(`[ pickFromCamera ] ${permissions} access: ${status}`)
       );
     } else {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [4, 3]
-      });
+      let result = await ImagePicker.launchImageLibraryAsync();
 
       if (!result.cancelled) {
         this.setState({ imageURI: result });
       }
-      // let image = await ImagePicker.launchCameraAsync().catch(error =>
-      //   console.log({ error })
-      // );
-      // this.maybeEmailImage(image);
     }
-
-    // if (result.some(({ status }) => status == "granted")) {
-    //   let result = await ImagePicker.launchImageLibraryAsync({
-    //     allowsEditing: true,
-    //     aspect: [4, 3]
-    //   });
-
-    //   if (!result.cancelled) {
-    //     this.setState({ imageURI: result });
-    //   }
-    // }
   };
 
   render() {
@@ -133,13 +125,15 @@ class NewEvent extends React.Component {
       <ScrollView style={styles.container}>
         {/* <Form type={Event} options={options} ref={c => (this._form = c)} /> */}
 
-        <Image source={this.state.imageURI} style={styles.image} />
-        <TouchableOpacity
-          style={styles.chooseImgButton}
-          onPress={() => this.onSelectImageClicked()}
-        >
-          <Text>Select Image</Text>
-        </TouchableOpacity>
+        <View style={styles.imageUpload}>
+          <Image source={this.state.imageURI} style={styles.image} />
+          <TouchableOpacity
+            style={styles.chooseImgButton}
+            onPress={() => this.onSelectImageClicked()}
+          >
+            <Text>Select Image</Text>
+          </TouchableOpacity>
+        </View>
 
         <Text style={styles.category}>Category</Text>
         <ModalSelector
@@ -171,11 +165,15 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: "contain"
+  },
+  imageUpload: {
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
 const mapStateToProps = state => {
-  return {};
+  return { firebase: state.firebase };
 };
 const mapDispatchToProps = dispatch => {
   return {

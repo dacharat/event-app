@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ScrollView,
-  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -73,24 +72,24 @@ class NewEvent extends React.Component {
   // }
 
   handleSubmit = () => {
-    // const value = this._form.getValue();
-    // const data = {
-    //   title: value.title,
-    //   description: value.description,
-    //   date: moment(value.date).format("DD MMM YY"),
-    //   time: moment(value.time).format("HH:mm"),
-    //   img: this.state.imageURI,
-    //   category: this.state.category
-    // };
-
+    const value = this._form.getValue();
     const data = {
-      title: "value.title",
-      description: "value.description",
-      date: "000000",
-      time: "0000",
+      title: value.title,
+      description: value.description,
+      date: moment(value.date).format("DD MMM YY"),
+      time: moment(value.time).format("HH:mm"),
       img: this.state.imageURI,
       category: this.state.category
     };
+
+    // const data = {
+    //   title: "value.title",
+    //   description: "value.description",
+    //   date: "000000",
+    //   time: "0000",
+    //   img: this.state.imageURI,
+    //   category: this.state.category
+    // };
 
     this.props.createEvent(data);
     this.props.navigation.navigate("Home");
@@ -123,7 +122,7 @@ class NewEvent extends React.Component {
     ];
     return (
       <ScrollView style={styles.container}>
-        {/* <Form type={Event} options={options} ref={c => (this._form = c)} /> */}
+        <Form type={Event} options={options} ref={c => (this._form = c)} />
 
         <View style={styles.imageUpload}>
           <Image source={this.state.imageURI} style={styles.image} />
@@ -141,7 +140,12 @@ class NewEvent extends React.Component {
           initValue={this.state.category}
           onChange={option => this.setState({ category: option.label })}
         />
-        <Button title="Create New Event" onPress={this.handleSubmit} />
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={this.handleSubmit}
+        >
+          <Text style={styles.submitButtonText}>Create New Event</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -169,6 +173,19 @@ const styles = StyleSheet.create({
   imageUpload: {
     justifyContent: "center",
     alignItems: "center"
+  },
+  submitButton: {
+    padding: 10,
+    marginTop: 30,
+    marginBottom: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: "#6dfcff"
+  },
+  submitButtonText: {
+    fontWeight: "bold",
+    fontSize: 20
   }
 });
 

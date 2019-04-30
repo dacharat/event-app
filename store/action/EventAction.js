@@ -2,13 +2,12 @@ export const createEvent = event => {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
 
+    // create file name
     const uri = event.img.uri;
     const splitURI = uri.split("/");
     let filename = splitURI[splitURI.length - 1];
-    console.log(filename);
-    var metadata = {
-      contentType: "image/png"
-    };
+
+    // change image uri to blob
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {
@@ -23,10 +22,12 @@ export const createEvent = event => {
       xhr.send(null);
     });
 
+    // get firebase storage refference
     const storageRef = firebase.storage().ref();
     const imageRef = storageRef.child("images/" + filename);
 
-    const uploadTask = imageRef.put(blob, metadata);
+    // upload image to firebase
+    const uploadTask = imageRef.put(blob);
     uploadTask.on(
       "state_changed",
       snap => {},
@@ -42,13 +43,5 @@ export const createEvent = event => {
         });
       }
     );
-    // imageRef
-    //   .putString(base64, "data_url")
-    //   .then(snap => console.log("snap complete"))
-    //   .catch(err => console.log(err));
-
-    // firebase.push("events", event).then(() => {
-    //   dispatch({ type: "CREATE_NEW_EVENT", event });
-    // });
   };
 };

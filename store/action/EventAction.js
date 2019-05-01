@@ -1,11 +1,16 @@
 export const createEvent = event => {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    const uri = event.img;
 
     // create file name
-    const uri = event.img.uri;
-    const splitURI = uri.split("/");
-    let filename = splitURI[splitURI.length - 1];
+    let filename =
+      event.title.replace(/\s/g, "") +
+      "-(" +
+      event.date +
+      ")-(" +
+      event.time +
+      ")";
 
     // change image uri to blob
     const blob = await new Promise((resolve, reject) => {
@@ -36,7 +41,6 @@ export const createEvent = event => {
       },
       async () => {
         const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-        console.log("Download URL: ", downloadURL);
 
         firebase.push("events", { ...event, img: downloadURL }).then(() => {
           console.log("create event complete");

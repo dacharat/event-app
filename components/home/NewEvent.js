@@ -20,8 +20,8 @@ class NewEvent extends React.Component {
   state = {
     title: "",
     description: "",
-    date: "",
-    time: "",
+    date: moment().format("YYYY-MM-DD"),
+    time: moment().format("HH:mm"),
     category: "Sports",
     img: defaultImg
   };
@@ -36,7 +36,6 @@ class NewEvent extends React.Component {
     const permissions = Permissions.CAMERA_ROLL;
     const { status } = await Permissions.askAsync(permissions);
 
-    console.log(`[ pickFromCamera ] ${permissions} access: ${status}`);
     if (status !== "granted") {
       Sentry.captureException(
         new Error(`[ pickFromCamera ] ${permissions} access: ${status}`)
@@ -45,7 +44,7 @@ class NewEvent extends React.Component {
       let result = await ImagePicker.launchImageLibraryAsync();
 
       if (!result.cancelled) {
-        this.setState({ img: result });
+        this.setState({ img: result.uri });
       }
     }
   };
@@ -59,18 +58,18 @@ class NewEvent extends React.Component {
     ];
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.inlineForm}>
-          <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.inputText}
-            onChangeText={value => this.setState({ title: value })}
-            value={this.state.title}
-          />
-        </View>
+        <Text style={styles.label}>Title</Text>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Enter event name"
+          onChangeText={value => this.setState({ title: value })}
+          value={this.state.title}
+        />
 
-        <Text>Description</Text>
+        <Text style={styles.label}>Description</Text>
         <TextInput
           multiline
+          placeholder="Add some description for this event"
           style={styles.textArea}
           onChangeText={value => this.setState({ description: value })}
           value={this.state.description}
@@ -97,14 +96,21 @@ class NewEvent extends React.Component {
           format="HH:mm"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
-          minuteInterval={10}
+          minuteInterval={1}
           onDateChange={time => {
             this.setState({ time: time });
           }}
         />
 
         <View style={styles.imageUpload}>
-          <Image source={this.state.img} style={styles.image} />
+          <Image
+            source={
+              this.state.img === defaultImg
+                ? this.state.img
+                : { uri: this.state.img }
+            }
+            style={styles.image}
+          />
           <TouchableOpacity
             style={styles.chooseImgButton}
             onPress={() => this.onSelectImageClicked()}
@@ -119,6 +125,7 @@ class NewEvent extends React.Component {
           initValue={this.state.category}
           onChange={option => this.setState({ category: option.label })}
         />
+
         <TouchableOpacity
           style={styles.submitButton}
           onPress={this.handleSubmit}
@@ -132,7 +139,6 @@ class NewEvent extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
     padding: 18,
     backgroundColor: "#ffffff"
   },
@@ -181,18 +187,13 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10
   },
-  inlineForm: {
-    flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center"
-  },
   datePicker: {
     width: "100%",
     margin: 5
   },
   label: {
-    flex: 0.2
+    fontSize: 18,
+    fontWeight: "bold"
   }
 });
 

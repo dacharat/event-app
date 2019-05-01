@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
     right: 15,
     bottom: 15,
     borderRadius: 100,
-    backgroundColor: "lightblue"
+    backgroundColor: "#021aee"
   },
   text: {
-    color: 'white',
+    color: "white",
     marginTop: -5,
     fontSize: 50,
     fontWeight: "200"

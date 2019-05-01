@@ -7,6 +7,16 @@ export default createAppContainer(
     {
       Login: Login,
       Regis: Register
+    },
+    {
+      headerMode: "none",
+      navigationOptions: {
+        headerVisible: false,
+        cardStyle: {
+          shadowColor: "transparent",
+          backgroundColor: "transparent"
+        }
+      }
     }
   )
 );

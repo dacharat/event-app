@@ -2,14 +2,19 @@ import React from "react";
 import {
   Text,
   View,
-  TextInput,
   Image,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground,
+  KeyboardAvoidingView
 } from "react-native";
-import logo from "../../assets/app_logo.png";
+import logo from "../../assets/app_logo-removebg.png";
 import { connect } from "react-redux";
 import { login } from "../../store/action/AuthAction";
+import bgImg from "../../assets/background.jpg";
+
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { Fumi } from "react-native-textinput-effects";
 
 class Login extends React.Component {
   state = {
@@ -25,28 +30,59 @@ class Login extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={styles.container}>
-        <Image source={logo} style={styles.logo} />
-        <Text>E-mail</Text>
-        <TextInput
-          style={styles.inputText}
-          onChangeText={value => this.setState({ mail: value })}
-          value={this.state.mail}
-        />
-        <Text>Password</Text>
-        <TextInput
-          style={styles.inputText}
-          onChangeText={value => this.setState({ password: value })}
-          value={this.state.password}
-          secureTextEntry={true}
-        />
-        <TouchableOpacity onPress={() => this.onLoginButtonClicked()}>
-          <Text>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Regis")}>
-          <Text>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+      <ImageBackground source={bgImg} style={styles.imgBackground}>
+        <KeyboardAvoidingView
+          behavior="padding"
+          enabled
+          style={styles.container}
+        >
+          <Image source={logo} style={styles.logo} />
+          <View style={styles.inputTextView}>
+            <Fumi
+              label={"Email"}
+              iconClass={FontAwesomeIcon}
+              iconName={"at"}
+              iconColor={"#6002ee"}
+              iconSize={20}
+              iconWidth={40}
+              inputPadding={16}
+              style={styles.inputText}
+              onChangeText={text => {
+                this.setState({ mail: text });
+              }}
+            />
+            <Fumi
+              label={"Password"}
+              iconClass={FontAwesomeIcon}
+              iconName={"lock"}
+              iconColor={"#6002ee"}
+              iconSize={20}
+              iconWidth={40}
+              inputPadding={16}
+              style={styles.inputText}
+              onChangeText={text => {
+                this.setState({ password: text });
+              }}
+              secureTextEntry={true}
+            />
+          </View>
+
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => this.onLoginButtonClicked()}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={() => navigation.navigate("Regis")}
+            >
+              <Text style={styles.registerText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     );
   }
 }
@@ -58,15 +94,51 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   logo: {
-    width: 70,
-    height: 70,
+    width: "100%",
+    height: 120,
     resizeMode: "contain"
   },
+  imgBackground: {
+    height: "100%",
+    width: "100%"
+  },
+  form: {
+    width: "100%",
+    height: 200,
+    padding: 20
+  },
+  inputTextView: {
+    width: "90%"
+  },
   inputText: {
-    borderWidth: 0.5,
-    width: "80%",
-    height: 30,
-    padding: 5
+    marginVertical: 3,
+    borderRadius: 15
+  },
+  button: {
+    width: "90%"
+  },
+  loginButton: {
+    marginVertical: 10,
+    borderRadius: 30,
+    backgroundColor: "#ee0290",
+    width: "100%",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  loginText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 18
+  },
+  registerButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%"
+  },
+  registerText: {
+    color: "white",
+    fontWeight: "bold"
   }
 });
 

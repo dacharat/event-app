@@ -4,8 +4,10 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from "react-native";
+import logo from "../../assets/app_logo-removebg.png";
 import MultiSelect from "react-native-multiple-select";
 import { connect } from "react-redux";
 import { register } from "../../store/action/AuthAction";
@@ -39,6 +41,8 @@ class Register extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image source={logo} style={styles.logo} />
+
         <Text style={styles.label}>E-mail</Text>
         <TextInput
           style={styles.textInput}
@@ -58,6 +62,7 @@ class Register extends React.Component {
           onChangeText={value => this.setState({ username: value })}
           value={this.state.username}
         />
+        <Text style={styles.label}>Category</Text>
         <View style={styles.category}>
           <MultiSelect
             items={items}
@@ -72,19 +77,36 @@ class Register extends React.Component {
             submitButtonText="Enter"
           />
         </View>
-        <TouchableOpacity
-          style={styles.register}
-          onPress={() => this.onSubmit()}
-        >
-          <Text>Register</Text>
-        </TouchableOpacity>
+        <View style={styles.inline}>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => this.props.navigation.navigate("Login")}
+          >
+            <Text>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.register}
+            onPress={() => this.onSubmit()}
+          >
+            <Text>Register</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: { margin: 10 },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    margin: 10
+  },
+  logo: {
+    width: "100%",
+    height: 120,
+    resizeMode: "contain"
+  },
   label: {
     fontSize: 18
   },
@@ -92,18 +114,35 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 5,
     height: 30,
-    marginLeft: 25,
-    marginRight: 25
+    paddingHorizontal: 10,
+    marginHorizontal: 10
   },
   category: {
-    margin: 20
+    margin: 10
   },
   register: {
+    marginHorizontal: 2,
+    flex: 0.7,
     borderWidth: 0.5,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    height: 27
+    height: 33,
+    backgroundColor: "#90ee02"
+  },
+  cancelButton: {
+    marginHorizontal: 2,
+    flex: 0.3,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 33,
+    backgroundColor: "#ee0290"
+  },
+  inline: {
+    width: "100%",
+    flexDirection: "row"
   }
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Image } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator
@@ -15,11 +15,38 @@ import EditProfile from "../components/user/EditProfile";
 import StarEvents from "../components/user/StarEvents";
 import JoinEvents from "../components/user/JoinEvents";
 
-const HomeStackTab = createStackNavigator({
-  Home: HomeTab,
-  NewEvent: NewEvent,
-  Detail: EventDetail
-});
+const options = {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: "#6002ee"
+    },
+    headerTintColor: "#fff",
+    headerTitleStyle: {
+      fontWeight: "bold"
+    },
+    headerBackTitle: "Back",
+    headerTitle: (
+      <Image
+        style={{
+          width: 70,
+          height: 70,
+          resizeMode: "contain",
+          marginHorizontal: 7
+        }}
+        source={require("../assets/app_logo-removebg.png")}
+      />
+    )
+  }
+};
+
+const HomeStackTab = createStackNavigator(
+  {
+    Home: HomeTab,
+    NewEvent: NewEvent,
+    Detail: EventDetail
+  },
+  options
+);
 
 HomeStackTab.navigationOptions = {
   tabBarLabel: "Home",
@@ -35,9 +62,12 @@ HomeStackTab.navigationOptions = {
   )
 };
 
-const NotificationStackTab = createStackNavigator({
-  Noti: NotificationTab
-});
+const NotificationStackTab = createStackNavigator(
+  {
+    Noti: NotificationTab
+  },
+  options
+);
 
 NotificationStackTab.navigationOptions = {
   tabBarLabel: "Notification",
@@ -49,12 +79,15 @@ NotificationStackTab.navigationOptions = {
   )
 };
 
-const UserStackTab = createStackNavigator({
-  User: UserTab,
-  EditProfile: EditProfile,
-  StarEvents: StarEvents,
-  JoinEvents: JoinEvents
-});
+const UserStackTab = createStackNavigator(
+  {
+    User: UserTab,
+    EditProfile: EditProfile,
+    StarEvents: StarEvents,
+    JoinEvents: JoinEvents
+  },
+  options
+);
 
 UserStackTab.navigationOptions = {
   tabBarLabel: "User",
@@ -66,8 +99,25 @@ UserStackTab.navigationOptions = {
   )
 };
 
-export default createBottomTabNavigator({
-  HomeStackTab,
-  NotificationStackTab,
-  UserStackTab
-});
+export default createBottomTabNavigator(
+  {
+    HomeStackTab,
+    NotificationStackTab,
+    UserStackTab
+  },
+  {
+    tabBarOptions: {
+      style: {
+        height: 60,
+        backgroundColor: "#6002ee"
+      },
+      activeTintColor: "white",
+      labelStyle: {
+        fontSize: 15,
+        margin: 0,
+        padding: 0,
+        fontWeight: "bold"
+      }
+    }
+  }
+);

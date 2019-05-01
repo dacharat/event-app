@@ -39,7 +39,12 @@ class EventList extends React.Component {
       });
 
     return filter.map((key, i) => (
-      <EventCard key={i} navigation={navigation} eventID={key} detail={firebaseEvents[key]} />
+      <EventCard
+        key={i}
+        navigation={navigation}
+        eventID={key}
+        detail={firebaseEvents[key]}
+      />
     ));
   };
 
@@ -61,7 +66,7 @@ class EventList extends React.Component {
 const styles = StyleSheet.create({
   contentContainer: {
     width: "100%",
-    paddingVertical: 5
+    marginVertical: 5
   }
 });
 

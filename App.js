@@ -1,5 +1,5 @@
 import React from "react";
-
+import { YellowBox } from "react-native";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import MainReducer from "./store/reducers/MainReducer";
@@ -15,6 +15,8 @@ const store = createStore(
     reactReduxFirebase(fbConfig, { userProfile: "users" })
   )
 );
+
+YellowBox.ignoreWarnings(["Setting a timer"]);
 
 export default class App extends React.Component {
   render() {

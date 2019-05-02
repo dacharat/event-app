@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: "100%",
-    height: 120,
+    height: 150,
     resizeMode: "contain"
   },
   imgBackground: {
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   registerText: {
+    fontSize: 16,
     color: "white",
     fontWeight: "bold"
   }

@@ -20,8 +20,9 @@ class NewEvent extends React.Component {
   state = {
     title: "",
     description: "",
-    date: moment().format("YYYY-MM-DD"),
+    date: moment().format("DD MMM YYYY"),
     time: moment().format("HH:mm"),
+    place: '',
     category: "Sports",
     img: defaultImg
   };
@@ -79,8 +80,8 @@ class NewEvent extends React.Component {
           style={styles.datePicker}
           date={this.state.date}
           mode="date"
-          format="YYYY-MM-DD"
-          minDate={moment().format("YYYY-MM-DD")}
+          format="DD MMM YYYY"
+          minDate={moment().format("DD MMM YYYY")}
           maxDate="2116-06-01"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
@@ -100,6 +101,14 @@ class NewEvent extends React.Component {
           onDateChange={time => {
             this.setState({ time: time });
           }}
+        />
+
+        <Text style={styles.label}>Place</Text>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Enter event venue"
+          onChangeText={value => this.setState({ place: value })}
+          value={this.state.place}
         />
 
         <View style={styles.imageUpload}>

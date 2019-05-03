@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import EventCard from "./EventCard";
 import Filter from "./Filter";
 
@@ -13,6 +13,13 @@ class EventList extends React.Component {
   state = {
     eventFilter: []
   };
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      callback: this.callbackFilter,
+      eventFilter: this.state.eventFilter
+    });
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.profile !== prevProps.profile) {
@@ -66,7 +73,6 @@ class EventList extends React.Component {
 const styles = StyleSheet.create({
   contentContainer: {
     width: "100%",
-    // paddingBottom: 5,
     backgroundColor: "#f7e5f2"
   }
 });

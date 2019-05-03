@@ -1,5 +1,4 @@
 import React from 'react'
-// import {View} from 'react-native'
 import EventList from './EventLists';
 import NewButton from './NewButton';
 

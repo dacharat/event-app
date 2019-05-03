@@ -70,7 +70,7 @@ class Filter extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
+    marginVertical: 5,
     width: "100%",
     alignItems: "center",
     justifyContent: "center"

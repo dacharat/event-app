@@ -18,7 +18,7 @@ import JoinEvents from "../components/user/JoinEvents";
 const options = {
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: "#ee0290"
+      backgroundColor: "#c33bab"
     },
     headerTintColor: "#fff",
     headerTitleStyle: {
@@ -109,9 +109,10 @@ export default createBottomTabNavigator(
     tabBarOptions: {
       style: {
         height: 60,
-        backgroundColor: "#ee0290"
+        backgroundColor: "#c33bab"
       },
       activeTintColor: "white",
+      inactiveTintColor: "#de90cd",
       labelStyle: {
         fontSize: 15,
         margin: 0,

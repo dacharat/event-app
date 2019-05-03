@@ -66,7 +66,8 @@ class EventList extends React.Component {
 const styles = StyleSheet.create({
   contentContainer: {
     width: "100%",
-    marginVertical: 5
+    // paddingBottom: 5,
+    backgroundColor: "#f7e5f2"
   }
 });
 

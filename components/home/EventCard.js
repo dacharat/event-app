@@ -57,11 +57,23 @@ const CustomButton = ({ title, onPress, star = false }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: "100%",
-    height: 200,
+    width: "97%",
+    height: 215,
     borderWidth: 0.5,
     borderColor: "#d6d7da",
-    marginVertical: 5
+    paddingVertical: 5,
+    marginBottom: 7,
+    marginHorizontal: 5,
+    borderRadius: 15,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 4
   },
   image: {
     width: "100%",

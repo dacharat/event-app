@@ -3,11 +3,24 @@ import { View, StyleSheet } from "react-native";
 import AppNavigator from "../navigators/AppNavigator";
 import { connect } from "react-redux";
 import AuthNavigator from "../navigators/AuthNavigator";
+import Loading from "./Loading";
 
 const MainPage = ({ auth }) => {
+  console.log(auth);
+
   return (
     <View style={styles.container}>
-      {auth.uid ? <AppNavigator /> : <AuthNavigator />}
+      {auth.isLoaded ? (
+        auth.uid ? (
+          <AppNavigator />
+        ) : (
+          <AuthNavigator />
+        )
+      ) : (
+        <Loading />
+      )}
+
+      {/* {auth.uid ? <AppNavigator /> : <AuthNavigator />} */}
     </View>
   );
 };

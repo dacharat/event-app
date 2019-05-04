@@ -20,7 +20,7 @@ class NewEvent extends React.Component {
   state = {
     title: "",
     description: "",
-    date: moment().format("DD MMM YYYY"),
+    date: moment().format("YYYY-MM-DD"),
     time: moment().format("HH:mm"),
     place: "",
     category: "Sports",
@@ -30,7 +30,10 @@ class NewEvent extends React.Component {
 
   handleSubmit = () => {
     const data = this.state;
-    this.props.createEvent(data);
+    this.props.createEvent({
+      ...data,
+      date: moment(data.date).format("DD MMM YYYY")
+    });
     this.props.navigation.navigate("Home");
   };
 
@@ -82,12 +85,13 @@ class NewEvent extends React.Component {
           style={styles.datePicker}
           date={this.state.date}
           mode="date"
-          format="DD MMM YYYY"
-          minDate={moment().format("DD MMM YYYY")}
+          format="YYYY-MM-DD"
+          minDate={moment().format("YYYY-MM-DD")}
           maxDate="2116-06-01"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           onDateChange={date => {
+            console.log(moment(date).format("DD MMM YYYY"));
             this.setState({ date: date });
           }}
         />

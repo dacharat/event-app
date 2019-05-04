@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { logout } from "../../store/action/AuthAction";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const User = ({ navigation, auth, profile, logout }) => {
   return (
@@ -26,36 +27,39 @@ const User = ({ navigation, auth, profile, logout }) => {
       </View>
       <ScrollView style={styles.scollView}>
         <TouchableOpacity
+          activeOpacity={1}
           style={styles.editProfile}
           onPress={() => {
             navigation.navigate("EditProfile");
           }}
         >
-          <Text>Edit Profile</Text>
+          <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          activeOpacity={1}
+          style={styles.editProfile}
+          onPress={() => {
+            navigation.navigate("MyEvents");
+          }}
+        >
+          <Text style={styles.buttonText}>My Event</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
           style={styles.editProfile}
           onPress={() => {
             navigation.navigate("StarEvents");
           }}
         >
-          <Text>Star Events</Text>
+          <Text style={styles.buttonText}>Star Events</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.editProfile}
-          onPress={() => {
-            navigation.navigate("JoinEvents");
-          }}
-        >
-          <Text>My Event</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          activeOpacity={1}
           style={styles.logout}
-          onPress={() => {
-            logout();
-          }}
+          onPress={() => logout()}
         >
-          <Text>Log Out</Text>
+          <Icon style={styles.logoutText} name="power-off" />
+          <Text style={styles.logoutText}>{"  "}Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </>
@@ -69,8 +73,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    borderBottomColor: "black",
-    borderBottomWidth: 0.167
+    borderBottomColor: "#cecece",
+    borderBottomWidth: 1,
+    backgroundColor: "#c33bab"
   },
   scollView: {
     height: "70%"
@@ -84,23 +89,34 @@ const styles = StyleSheet.create({
   profileName: {
     marginLeft: 30,
     marginRight: 30,
-    fontWeight: "300",
-    fontSize: 24
+    fontWeight: "500",
+    fontSize: 24,
+    color: "white"
   },
   editProfile: {
-    borderBottomColor: "black",
-    borderBottomWidth: 0.167,
-    height: 75,
-    alignItems: "center",
-    justifyContent: "center"
+    borderBottomColor: "#cecece",
+    borderBottomWidth: 1,
+    height: 60,
+    justifyContent: "center",
+    paddingHorizontal: 15
   },
   logout: {
-    backgroundColor: "red",
-    borderBottomColor: "black",
-    borderBottomWidth: 0.167,
-    height: 75,
+    backgroundColor: "#ff5e5e",
+    margin: 10,
+    borderRadius: 50,
+    height: 50,
     alignItems: "center",
+    flexDirection: "row",
     justifyContent: "center"
+  },
+  logoutText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "900"
+  },
+  buttonText: {
+    fontWeight: "600",
+    fontSize: 16
   }
 });
 

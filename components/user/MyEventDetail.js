@@ -1,12 +1,9 @@
 import React from "react";
 import { View, ScrollView, Image, Text, StyleSheet } from "react-native";
-import DecisionButton from "./DecisionButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const EventDetail = ({ navigation }) => {
+const MyEventDetail = ({ navigation }) => {
   const detail = navigation.getParam("detail", {});
-  const eventID = navigation.getParam("eventID", {});
-  const userID = navigation.getParam("userID", {});
 
   return (
     <View style={styles.container}>
@@ -37,8 +34,12 @@ const EventDetail = ({ navigation }) => {
           <Text style={styles.information}>Information</Text>
           <Text style={styles.description}>{"\t" + detail.description}</Text>
         </View>
+        <View style={styles.contentView}>
+          <Icon style={styles.location} name="users">
+            <Text>{"   " + detail.participant.length}</Text>
+          </Icon>
+        </View>
       </ScrollView>
-      <DecisionButton eventID={eventID} userID={userID} />
     </View>
   );
 };
@@ -84,4 +85,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EventDetail;
+export default MyEventDetail;

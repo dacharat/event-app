@@ -7,3 +7,4 @@
 - [x] add join event to auth
 - [x] add interest event to auth
 - [x] star background don't change when remove from star lists.
+- [ ] data picker make android crash.

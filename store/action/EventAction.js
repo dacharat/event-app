@@ -7,7 +7,7 @@ export const createEvent = event => {
     let filename =
       event.title.replace(/\s/g, "") +
       "-(" +
-      event.date +
+      event.date.replace(/\s/g, "") +
       ")-(" +
       event.time +
       ")";
@@ -47,5 +47,18 @@ export const createEvent = event => {
         });
       }
     );
+  };
+};
+
+export const addParticipant = (eventID, userID = "") => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    const participant = getState().firebase.data.events[eventID].participant || [];
+
+    firebase
+      .ref("events/" + eventID)
+      .update({ participant: [...participant ,userID] })
+      .then(() => console.log("update complete"))
+      .catch(err => console.log(err));
   };
 };

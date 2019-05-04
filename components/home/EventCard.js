@@ -1,7 +1,15 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Alert
+} from "react-native";
 import { connect } from "react-redux";
 import { addJoinEvent, addStarEvent } from "../../store/action/AuthAction";
+import { addParticipant } from "../../store/action/EventAction";
 
 const EventCard = ({
   eventID,
@@ -9,13 +17,19 @@ const EventCard = ({
   navigation,
   addStar,
   addJoin,
-  profile
+  profile,
+  addParticipant,
+  auth
 }) => {
   const stars = profile.stars ? profile.stars : [];
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("Detail", { detail: detail, eventID: eventID })
+        navigation.navigate("Detail", {
+          detail: detail,
+          eventID: eventID,
+          userID: auth.uid
+        })
       }
       style={styles.card}
     >
@@ -64,7 +78,10 @@ const EventCard = ({
                   },
                   {
                     text: "OK",
-                    onPress: () => addJoin(eventID)
+                    onPress: () => {
+                      addParticipant(eventID, auth.uid);
+                      addJoin(eventID);
+                    }
                   }
                 ]
               );
@@ -181,12 +198,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { profile: state.firebase.profile };
+  return { profile: state.firebase.profile, auth: state.firebase.auth };
 };
 const mapDispatchToProps = dispatch => {
   return {
     addStar: event => dispatch(addStarEvent(event)),
-    addJoin: event => dispatch(addJoinEvent(event))
+    addJoin: event => dispatch(addJoinEvent(event)),
+    addParticipant: (eventID, userID) =>
+      dispatch(addParticipant(eventID, userID))
   };
 };
 

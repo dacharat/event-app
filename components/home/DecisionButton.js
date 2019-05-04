@@ -2,8 +2,15 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import { connect } from "react-redux";
 import { addStarEvent, addJoinEvent } from "../../store/action/AuthAction";
+import { addParticipant } from "../../store/action/EventAction";
 
-const DecisionButton = ({ eventID, addJoin, addStar }) => {
+const DecisionButton = ({
+  eventID,
+  addJoin,
+  addStar,
+  addParticipant,
+  userID
+}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -26,7 +33,10 @@ const DecisionButton = ({ eventID, addJoin, addStar }) => {
               },
               {
                 text: "OK",
-                onPress: () => addJoin(eventID)
+                onPress: () => {
+                  addParticipant(eventID, userID);
+                  addJoin(eventID);
+                }
               }
             ]
           );
@@ -83,7 +93,9 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => {
   return {
     addStar: event => dispatch(addStarEvent(event)),
-    addJoin: event => dispatch(addJoinEvent(event))
+    addJoin: event => dispatch(addJoinEvent(event)),
+    addParticipant: (eventID, userID) =>
+      dispatch(addParticipant(eventID, userID))
   };
 };
 

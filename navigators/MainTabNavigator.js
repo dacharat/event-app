@@ -13,7 +13,8 @@ import EventDetail from "../components/home/EventDetail";
 import UserTab from "../tabs/UserTab";
 import EditProfile from "../components/user/EditProfile";
 import StarEvents from "../components/user/StarEvents";
-import JoinEvents from "../components/user/JoinEvents";
+import MyEvent from "../components/user/MyEvents";
+import MyEventDetail from "../components/user/MyEventDetail";
 
 const options = {
   defaultNavigationOptions: {
@@ -84,7 +85,8 @@ const UserStackTab = createStackNavigator(
     User: UserTab,
     EditProfile: EditProfile,
     StarEvents: StarEvents,
-    JoinEvents: JoinEvents
+    MyEvents: MyEvent,
+    MyEventDetail: MyEventDetail
   },
   options
 );

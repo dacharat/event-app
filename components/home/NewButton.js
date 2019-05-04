@@ -4,7 +4,7 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 const NewButton = ({ navigation }) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={1}
       style={styles.circle}
       onPress={() => navigation.navigate("NewEvent")}
     >

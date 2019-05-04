@@ -22,9 +22,10 @@ class NewEvent extends React.Component {
     description: "",
     date: moment().format("DD MMM YYYY"),
     time: moment().format("HH:mm"),
-    place: '',
+    place: "",
     category: "Sports",
-    img: defaultImg
+    img: defaultImg,
+    createBy: this.props.profile.username
   };
 
   handleSubmit = () => {
@@ -57,6 +58,7 @@ class NewEvent extends React.Component {
       { key: 2, label: "Entertainment" },
       { key: 3, label: "Activities" }
     ];
+
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.label}>Title</Text>
@@ -175,9 +177,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    backgroundColor: "#6dfcff"
+    backgroundColor: "#de90cd"
   },
   submitButtonText: {
+    color: "white",
     fontWeight: "bold",
     fontSize: 20
   },
@@ -207,7 +210,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return { firebase: state.firebase };
+  return { profile: state.firebase.profile };
 };
 const mapDispatchToProps = dispatch => {
   return {

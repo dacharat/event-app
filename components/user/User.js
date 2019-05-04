@@ -12,7 +12,7 @@ import { logout } from "../../store/action/AuthAction";
 
 const User = ({ navigation, auth, profile, logout }) => {
   return (
-    <View>
+    <>
       <View style={styles.profile}>
         <Image
           style={styles.profileImg}
@@ -24,7 +24,7 @@ const User = ({ navigation, auth, profile, logout }) => {
         />
         <Text style={styles.profileName}>{profile.username}</Text>
       </View>
-      <ScrollView>
+      <ScrollView style={styles.scollView}>
         <TouchableOpacity
           style={styles.editProfile}
           onPress={() => {
@@ -58,20 +58,22 @@ const User = ({ navigation, auth, profile, logout }) => {
           <Text>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, width: "100%" },
   profile: {
     width: "100%",
-    height: 100,
+    height: "30%",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     borderBottomColor: "black",
     borderBottomWidth: 0.167
+  },
+  scollView: {
+    height: "70%"
   },
   profileImg: {
     width: 50,

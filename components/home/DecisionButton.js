@@ -1,23 +1,39 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import { connect } from "react-redux";
+import { addStarEvent, addJoinEvent } from "../../store/action/AuthAction";
 
-const DecisionButton = ({ detail, addJoin, addStar }) => {
+const DecisionButton = ({ eventID, addJoin, addStar }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <TouchableOpacity
-          style={styles.favourite}
-          onPress={() => addStar(detail)}
-        >
-          <Text style={styles.favouriteText}>⭐️</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.button}>
-        <TouchableOpacity style={styles.add} onPress={() => addJoin(detail)}>
-          <Text style={styles.addText}>+</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.favourite}
+        onPress={() => addStar(eventID)}
+      >
+        <Text style={styles.favouriteText}>⭐️</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.add}
+        onPress={() => {
+          Alert.alert(
+            "Confirm Join",
+            "Do you want to join this event? \nAfter joining, it cannot be canceled!!",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              {
+                text: "OK",
+                onPress: () => addJoin(eventID)
+              }
+            ]
+          );
+        }}
+      >
+        <Text style={styles.addText}>Join</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -30,33 +46,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     bottom: 0,
-    borderRadius: 10,
-    backgroundColor: "#f9f9f9",
     flexDirection: "row",
     margin: 0
   },
   button: { width: "50%" },
   favourite: {
+    flex: 0.3,
     height: "100%",
-    backgroundColor: "#fc4141",
+    backgroundColor: "#b772d7",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
     paddingTop: 10,
-    paddingBottom: 10,
-    marginLeft: 30,
-    marginRight: 30
+    paddingBottom: 10
   },
   add: {
+    flex: 0.7,
     height: "100%",
-    backgroundColor: "#42f46e",
+    backgroundColor: "#de90cd",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
     paddingTop: 10,
-    paddingBottom: 10,
-    marginLeft: 30,
-    marginRight: 30
+    paddingBottom: 10
   },
   favouriteText: {
     fontSize: 30
@@ -64,7 +74,7 @@ const styles = StyleSheet.create({
   addText: {
     position: "absolute",
     color: "white",
-    fontSize: 50,
+    fontSize: 30,
     fontWeight: "bold",
     margin: 0
   }
@@ -72,9 +82,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addStar: event =>
-      dispatch({ type: "ADD_STARS_EVENT", payload: event.title }),
-    addJoin: event => dispatch({ type: "JOIN_EVENT", payload: event.title })
+    addStar: event => dispatch(addStarEvent(event)),
+    addJoin: event => dispatch(addJoinEvent(event))
   };
 };
 

@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
 import { addJoinEvent, addStarEvent } from "../../store/action/AuthAction";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const EventCard = ({
   eventID,
@@ -15,7 +14,9 @@ const EventCard = ({
   const stars = profile.stars ? profile.stars : [];
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Detail", { detail: detail })}
+      onPress={() =>
+        navigation.navigate("Detail", { detail: detail, eventID: eventID })
+      }
       style={styles.card}
     >
       <View style={styles.imageView}>
@@ -43,19 +44,32 @@ const EventCard = ({
               ? detail.description.substring(0, 47) + "..."
               : detail.description}
           </Text>
-          <Icon name="location-arrow">
-            <Text>
-              {detail.place ? "  " + detail.place : "  No location added"}
-            </Text>
-          </Icon>
         </View>
         <View style={styles.buttonContent}>
           <CustomButton
-            title="⭐️"
+            title="★"
             onPress={() => addStar(eventID)}
             star={stars.includes(eventID)}
           />
-          <CustomButton title="+" onPress={() => addJoin(eventID)} />
+          <CustomButton
+            title="+"
+            onPress={() => {
+              Alert.alert(
+                "Confirm Join",
+                "Do you want to join this event? \nAfter joining, it cannot be canceled!!",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => addJoin(eventID)
+                  }
+                ]
+              );
+            }}
+          />
         </View>
       </View>
     </TouchableOpacity>
@@ -65,10 +79,15 @@ const EventCard = ({
 const CustomButton = ({ title, onPress, star = false }) => {
   return (
     <TouchableOpacity
-      style={{ ...styles.button, backgroundColor: star ? "#f7ff70" : "white" }}
+      style={{
+        ...styles.button,
+        backgroundColor: star ? "#ebbde0" : "white"
+      }}
       onPress={onPress}
     >
-      <Text>{title}</Text>
+      <Text style={{ ...styles.buttonText, color: star ? "#fff600" : "black" }}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -76,7 +95,7 @@ const CustomButton = ({ title, onPress, star = false }) => {
 const styles = StyleSheet.create({
   card: {
     width: "97%",
-    height: 270,
+    height: 300,
     borderWidth: 0.5,
     borderColor: "#d6d7da",
     marginBottom: 7,
@@ -94,21 +113,23 @@ const styles = StyleSheet.create({
   },
   imageView: {
     borderBottomWidth: 0.5,
-    borderBottomColor: "#b6b7ba"
+    borderBottomColor: "#d9d9db"
   },
   image: {
     width: "100%",
-    height: 135,
+    height: 180,
     resizeMode: "contain"
   },
   content: {
+    height: 120,
     flexDirection: "row",
     marginTop: 3
   },
   dateContent: {
     flex: 0.2,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    height: "95%"
   },
   dateContentDay: {
     fontSize: 20,
@@ -139,11 +160,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "90%"
   },
+  buttonText: {
+    fontSize: 23,
+    fontWeight: "bold"
+  },
   button: {
     flex: 0.5,
-    marginTop: 10,
+    marginVertical: 3,
     width: "80%",
-    height: 80,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

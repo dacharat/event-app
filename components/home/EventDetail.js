@@ -1,65 +1,85 @@
 import React from "react";
 import { View, ScrollView, Image, Text, StyleSheet } from "react-native";
 import DecisionButton from "./DecisionButton";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const EventDetail = ({ navigation }) => {
-  const detail = navigation.getParam("detail", {});
+  const  detail = navigation.getParam("detail", {});
+  const eventID = navigation.getParam("eventID", {});
+  
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image
-          style={styles.image}
-          source={
-            detail.img
-              ? { uri: detail.img }
-              : require("../../assets/no_image.jpg")
-          }
-        />
-        <Text style={styles.title}>{detail.title}</Text>
-        <Text style={styles.owner}>Create by: {detail.createBy}</Text>
-        <View style={styles.datetime}>
-          <Text style={styles.date}>Date: {detail.date}</Text>
-          <Text style={styles.date}>Time: {detail.time}</Text>
+        <View style={styles.imageView}>
+          <Image
+            style={styles.image}
+            source={
+              detail.img
+                ? { uri: detail.img }
+                : require("../../assets/no_image.jpg")
+            }
+          />
         </View>
-        <View>
+        <View style={styles.contentView}>
+          <Text style={styles.title}>{detail.title}</Text>
+          <Text style={styles.owner}> By: {detail.createBy}</Text>
+        </View>
+        <View style={styles.contentView}>
+          <Text style={styles.date}>{detail.date + ", " + detail.time}</Text>
+          <Icon style={styles.location} name="location-arrow">
+            <Text>
+              {detail.place ? "  " + detail.place : "  No location added"}
+            </Text>
+          </Icon>
+        </View>
+        <View style={styles.contentView}>
+          <Text style={styles.information} >Information</Text>
           <Text style={styles.description}>{"\t" + detail.description}</Text>
         </View>
       </ScrollView>
-      <DecisionButton detail={detail} />
+      <DecisionButton eventID={eventID} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  imageView: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#d9d9db"
+  },
   image: {
     width: "100%",
     height: 250,
     resizeMode: "contain"
   },
+  contentView: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#d9d9db",
+    paddingHorizontal: 15,
+    paddingVertical: 15
+  },
   title: {
-    fontSize: 30,
-    margin: 7
+    fontWeight: "700",
+    fontSize: 30
   },
   owner: {
     color: "#a1a2a3",
-    margin: 10,
-    marginTop: 0
+    margin: 7,
+    fontSize: 12
   },
-  date: { fontSize: 20 },
-  datetime: {
-    borderRadius: 7,
-    borderColor: "red",
-    borderWidth: 0.5,
-    marginRight: 10,
-    marginLeft: 10,
-    padding: 7
+  location: { fontSize: 16 },
+  date: {
+    fontSize: 18,
+    color: "#b0b0b2",
+    marginBottom: 5
+  },
+  information: {
+    fontWeight: 'bold'
   },
   description: {
-    margin: 10,
-    borderRadius: 7,
-    borderColor: "black",
-    borderWidth: 0.5,
+    marginHorizontal: 5,
+    color: "#b0b0b2"
   }
 });
 

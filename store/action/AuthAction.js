@@ -68,13 +68,16 @@ export const addStarEvent = eventID => {
   };
 };
 
-export const removeStarEent = eventID => {
+export const removeStarEvent = eventID => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     const stars = getState().firebase.profile.stars;
 
+    console.log(stars, eventID);
+    
     firebase
       .updateProfile({ stars: stars.filter(f => f !== eventID) })
+      .then(() => console.log("remove complete"))
       .catch(err => console.log(err));
   };
 };

@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import HomeTab from "../tabs/HomeTab";
-import NotificationTab from "../tabs/NotificationTab";
+import OncomingTab from "../tabs/OncomingTab";
 
 import TabBarIcon from "../components/TabBarIcon";
 import NewEvent from "../components/home/NewEvent";
@@ -63,15 +63,16 @@ HomeStackTab.navigationOptions = {
   )
 };
 
-const NotificationStackTab = createStackNavigator(
+const OncomingStackTab = createStackNavigator(
   {
-    Noti: NotificationTab
+    Oncomne: OncomingTab,
+    MyEventDetail: MyEventDetail
   },
   options
 );
 
-NotificationStackTab.navigationOptions = {
-  tabBarLabel: "Notification",
+OncomingStackTab.navigationOptions = {
+  tabBarLabel: "Oncoming",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -104,7 +105,7 @@ UserStackTab.navigationOptions = {
 export default createBottomTabNavigator(
   {
     HomeStackTab,
-    NotificationStackTab,
+    OncomingStackTab,
     UserStackTab
   },
   {

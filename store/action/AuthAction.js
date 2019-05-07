@@ -9,14 +9,20 @@ export const register = newUser => {
         { email, password },
         { username, email, interest, stars: [], join: [], credit: 100 }
       )
-      .catch(err => console.log(err));
+      .then(() => dispatch({ type: "CREATE_ACCOUNT_SUCCESS" }))
+      .catch(err =>
+        dispatch({ type: "CREATE_ACCOUNT_FAIL", payload: err.toString() })
+      );
   };
 };
 
 export const login = user => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    firebase.login(user).then(() => dispatch({ type: "LOGIN_SUCCESS" }));
+    firebase
+      .login(user)
+      .then(() => dispatch({ type: "LOGIN_SUCCESS" }))
+      .catch(err => dispatch({ type: "LOGIN_FAIL", payload: err.toString() }));
   };
 };
 
@@ -74,7 +80,7 @@ export const removeStarEvent = eventID => {
     const stars = getState().firebase.profile.stars;
 
     console.log(stars, eventID);
-    
+
     firebase
       .updateProfile({ stars: stars.filter(f => f !== eventID) })
       .then(() => console.log("remove complete"))

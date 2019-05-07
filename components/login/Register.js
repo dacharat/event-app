@@ -13,9 +13,10 @@ import MultiSelect from "react-native-multiple-select";
 import { connect } from "react-redux";
 import { register } from "../../store/action/AuthAction";
 import bgImg from "../../assets/background.jpg";
-
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Fumi } from "react-native-textinput-effects";
+
+import Toast from "../Toast";
 
 const items = [
   { name: "Sports" },
@@ -32,6 +33,12 @@ class Register extends React.Component {
     selectedItems: []
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.authError !== prevProps.authError) {
+      this.refs.toast.show(this.props.authError);
+    }
+  }
+
   onSubmit = () => {
     newUser = {
       email: this.state.mail,
@@ -39,8 +46,17 @@ class Register extends React.Component {
       username: this.state.username,
       interest: this.state.selectedItems
     };
-    this.props.createAccount(newUser);
-    this.props.navigation.navigate("Login");
+
+    if (
+      newUser.email !== "" &&
+      newUser.password.length >= 6 &&
+      newUser.username !== ""
+    )
+      this.props.createAccount(newUser);
+    else {
+      this.refs.toast.show("Invalid form");
+    }
+    // this.props.navigation.navigate("Login");
   };
 
   render() {
@@ -66,6 +82,7 @@ class Register extends React.Component {
               onChangeText={text => {
                 this.setState({ mail: text });
               }}
+              keyboardType="email-address"
             />
             <Fumi
               label={"Password"}
@@ -125,6 +142,14 @@ class Register extends React.Component {
           >
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
+          <Toast
+            ref="toast"
+            // style={styles.toast}
+            // fadeInDuration={750}
+            // fadeOutDuration={1000}
+            // opacity={0.9}
+            // textStyle={styles.toastText}
+          />
         </KeyboardAvoidingView>
       </ImageBackground>
     );
@@ -186,14 +211,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#cacdd1",
     fontWeight: "bold"
+  },
+  toast: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 15
+  },
+  toastText: {
+    color: "black",
+    fontWeight: "500"
   }
 });
 
+const mapStateToProps = state => {
+  return {
+    authError: state.auth.authError
+  };
+};
 const mapDispatchToProps = dispatch => {
   return { createAccount: newUser => dispatch(register(newUser)) };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Register);

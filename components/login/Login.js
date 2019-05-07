@@ -15,6 +15,7 @@ import bgImg from "../../assets/background.jpg";
 
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Fumi } from "react-native-textinput-effects";
+import Toast from "../Toast";
 
 class Login extends React.Component {
   state = {
@@ -22,9 +23,18 @@ class Login extends React.Component {
     password: ""
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.authError !== prevProps.authError) {
+      this.refs.toast.show(this.props.authError);
+    }
+  }
+
   onLoginButtonClicked = () => {
     user = { email: this.state.mail, password: this.state.password };
-    this.props.login(user);
+    if (user.email !== "" && user.password !== "") {
+      this.props.login(user);
+      this.refs.toast.show("Login");
+    }
   };
 
   render() {
@@ -81,6 +91,7 @@ class Login extends React.Component {
               <Text style={styles.registerText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
+          <Toast ref="toast" />
         </KeyboardAvoidingView>
       </ImageBackground>
     );
@@ -143,11 +154,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => {
+  return {
+    authError: state.auth.authError
+  };
+};
 const mapDispatchToProps = dispatch => {
   return { login: user => dispatch(login(user)) };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

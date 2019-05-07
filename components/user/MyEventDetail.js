@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 const MyEventDetail = ({ navigation }) => {
   const detail = navigation.getParam("detail", {});
-
+  const participant = detail.participant || [];
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -36,7 +36,7 @@ const MyEventDetail = ({ navigation }) => {
         </View>
         <View style={styles.contentView}>
           <Icon style={styles.location} name="users">
-            <Text>{"   " + detail.participant.length}</Text>
+            <Text>{"   " + participant.length}</Text>
           </Icon>
         </View>
       </ScrollView>

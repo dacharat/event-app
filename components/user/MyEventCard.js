@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const MyEventCard = ({ detail, navigation }) => {
+  const participant = detail.participant || [];
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("MyEventDetail", { detail: detail })}
@@ -20,12 +21,8 @@ const MyEventCard = ({ detail, navigation }) => {
       </View>
       <View style={styles.content}>
         <View style={styles.dateContent}>
-          <Text style={styles.dateContentDay}>
-            {detail.date.split(" ")[1]}
-          </Text>
-          <Text style={styles.dateContentDay}>
-            {detail.date.split(" ")[0]}
-          </Text>
+          <Text style={styles.dateContentDay}>{detail.date.split(" ")[1]}</Text>
+          <Text style={styles.dateContentDay}>{detail.date.split(" ")[0]}</Text>
           <Text style={styles.dateContentTime}>{detail.time}</Text>
         </View>
         <View style={styles.titleContent}>
@@ -40,7 +37,9 @@ const MyEventCard = ({ detail, navigation }) => {
         </View>
         <View style={styles.participantContent}>
           <Icon style={styles.participantIcon} name="users" />
-          <Text style={styles.participantText}>{" " + detail.participant.length} </Text>
+          <Text style={styles.participantText}>
+            {" " + participant.length}{" "}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
   participantText: {
     paddingTop: 5,
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   }
 });
 

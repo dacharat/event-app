@@ -156,7 +156,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "800"
   },
-  titleContent: { flex: 0.6 },
+  titleContent: {
+    flex: 0.6,
+    justifyContent: "center"
+  },
   title: {
     fontSize: 25,
     padding: 5

@@ -6,8 +6,6 @@ import AuthNavigator from "../navigators/AuthNavigator";
 import Loading from "./Loading";
 
 const MainPage = ({ auth }) => {
-  console.log(auth);
-
   return (
     <View style={styles.container}>
       {auth.isLoaded ? (
@@ -19,8 +17,6 @@ const MainPage = ({ auth }) => {
       ) : (
         <Loading />
       )}
-
-      {/* {auth.uid ? <AppNavigator /> : <AuthNavigator />} */}
     </View>
   );
 };

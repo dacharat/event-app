@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  View
+  View,
+  Alert
 } from "react-native";
 import { connect } from "react-redux";
 import ModalSelector from "react-native-modal-selector";
@@ -30,11 +31,15 @@ class NewEvent extends React.Component {
 
   handleSubmit = () => {
     const data = this.state;
-    this.props.createEvent({
-      ...data,
-      date: moment(data.date).format("DD MMM YYYY")
-    });
-    this.props.navigation.navigate("Home");
+    if (data.title !== "" && data.img !== defaultImg) {
+      this.props.createEvent({
+        ...data,
+        date: moment(data.date).format("DD MMM YYYY")
+      });
+      this.props.navigation.navigate("Home");
+    } else {
+      Alert.alert("Fail!!", "Please enter the Title or Picture");
+    }
   };
 
   onSelectImageClicked = async () => {

@@ -15,9 +15,12 @@ class EditProfile extends React.Component {
   state = {
     selectedItems: this.props.profile.interest
   };
-  render() {
-    const { update } = this.props;
 
+  onConfirmClicked = () => {
+    this.props.update(this.state.selectedItems);
+  };
+
+  render() {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.label}>Change Interested Event</Text>
@@ -35,7 +38,7 @@ class EditProfile extends React.Component {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => update(this.state.selectedItems)}
+          onPress={() => this.onConfirmClicked()}
         >
           <Text style={styles.buttonText}>Update Profile</Text>
         </TouchableOpacity>
@@ -50,8 +53,8 @@ const styles = StyleSheet.create({
     fontSize: 23
   },
   button: {
-    borderWidth: 0.5,
-    borderRadius: 10,
+    padding: 5,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,

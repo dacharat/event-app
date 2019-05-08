@@ -42,9 +42,10 @@ export const createEvent = event => {
       async () => {
         const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
 
-        firebase.push("events", { ...event, img: downloadURL }).then(() => {
-          console.log("create event complete");
-        });
+        firebase
+          .push("events", { ...event, img: downloadURL })
+          .then(() => dispatch({ type: "CREATE_EVENT_COMPLETE" }))
+          .catch(err => dispatch({ type: "CREATE_EVENT_FAIL", payload: err }));
       }
     );
   };
@@ -53,12 +54,13 @@ export const createEvent = event => {
 export const addParticipant = (eventID, userID = "") => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    const participant = getState().firebase.data.events[eventID].participant || [];
+    const participant =
+      getState().firebase.data.events[eventID].participant || [];
 
     firebase
       .ref("events/" + eventID)
-      .update({ participant: [...participant ,userID] })
-      .then(() => console.log("update complete"))
-      .catch(err => console.log(err));
+      .update({ participant: [...participant, userID] })
+      .then(() => dispatch({ type: "ADD_PARTICIPANT_COMPLETE" }))
+      .catch(err => dispatch({ type: "ADD_PARTICIPANT_FAIL", payload: err }));
   };
 };

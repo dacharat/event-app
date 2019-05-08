@@ -34,6 +34,8 @@ class Login extends React.Component {
     if (user.email !== "" && user.password !== "") {
       this.props.login(user);
       this.refs.toast.show("Login");
+    } else {
+      this.refs.toast.show("Invalid form");
     }
   };
 

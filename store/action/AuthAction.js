@@ -41,7 +41,8 @@ export const updateInterest = userInterest => {
 
     firebase
       .updateProfile({ interest: userInterest })
-      .catch(err => console.log(err));
+      .then(() => dispatch({ type: "UPDATE_INTEREST_COMPLETE" }))
+      .catch(err => dispatch({ type: "UPDATE_INTEREST_FAIL", payload: err }));
   };
 };
 
@@ -54,7 +55,8 @@ export const addJoinEvent = eventID => {
 
     firebase
       .updateProfile({ join: [...join, eventID] })
-      .catch(err => console.log(err));
+      .then(() => dispatch({ type: "JOIN_EVENT_COMPLETE" }))
+      .catch(err => dispatch({ type: "JOIN_EVENT_FAIL", payload: err }));
   };
 };
 
@@ -66,11 +68,11 @@ export const addStarEvent = eventID => {
       : [];
 
     stars.includes(eventID)
-      ? console.log("Already star this event")
+      ? dispatch({ type: "ALREADY_STAR_EVENT" })
       : firebase
           .updateProfile({ stars: [...stars, eventID] })
-          .then(() => console.log("Add stars"))
-          .catch(err => console.log(err));
+          .then(() => dispatch({ type: "STAR_EVENT_COMPLETE" }))
+          .catch(err => dispatch({ type: "STAR_EVENT_FAIL", payload: err }));
   };
 };
 
@@ -79,11 +81,9 @@ export const removeStarEvent = eventID => {
     const firebase = getFirebase();
     const stars = getState().firebase.profile.stars;
 
-    console.log(stars, eventID);
-
     firebase
       .updateProfile({ stars: stars.filter(f => f !== eventID) })
-      .then(() => console.log("remove complete"))
-      .catch(err => console.log(err));
+      .then(() => dispatch({ type: "REMOVE_STAR_EVENT_COMPLETE" }))
+      .catch(err => dispatch({ type: "REMOVE_STAR_EVENT_FAIL", payload: err }));
   };
 };

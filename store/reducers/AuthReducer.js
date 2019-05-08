@@ -13,22 +13,6 @@ const INITIAL_STATE = {
 
 export const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // case "ADD_STARS_EVENT":
-    //   if (state.stars.includes(action.payload)) return state;
-    //   newState = { ...state, stars: [...state.stars, action.payload] };
-    //   return newState;
-    // case "REMOVE_STARS_EVENT":
-    //   newState = {
-    //     ...state,
-    //     stars: state.stars.filter(star => star !== action.payload)
-    //   };
-    //   return newState;
-    // case "JOIN_EVENT":
-    //   newState = { ...state, join: [...state.join, action.payload] };
-    //   return newState;
-    // case "UPDATE_PROFILE":
-    //   newState = { ...state, interest: action.payload };
-    //   return newState;
     case "CREATE_ACCOUNT_SUCCESS":
       console.log("create account success");
       return state;
@@ -42,6 +26,33 @@ export const authReducer = (state = INITIAL_STATE, action) => {
       console.log("login success");
       return state;
     case "LOGIN_FAIL":
+      newState = { ...state, authError: action.payload };
+      return newState;
+    case "UPDATE_INTEREST_COMPLETE":
+      console.log("UPDATE_INTEREST_COMPLETE");
+      return state;
+    case "UPDATE_INTEREST_FAIL":
+      newState = { ...state, authError: action.payload };
+      return newState;
+    case "JOIN_EVENT_COMPLETE":
+      console.log("JOIN_EVENT_COMPLETE");
+      return state;
+    case "JOIN_EVENT_FAIL":
+      newState = { ...state, authError: action.payload };
+      return newState;
+    case "STAR_EVENT_COMPLETE":
+      console.log("STAR_EVENT_COMPLETE");
+      return state;
+    case "ALREADY_STAR_EVENT":
+      console.log("ALREADY_STAR_EVENT");
+      return state;
+    case "STAR_EVENT_FAIL":
+      newState = { ...state, authError: action.payload };
+      return newState;
+    case "REMOVE_STAR_EVENT_COMPLETE":
+      console.log("REMOVE_STAR_EVENT_COMPLETE");
+      return state;
+    case "REMOVE_STAR_EVENT_FAIL":
       newState = { ...state, authError: action.payload };
       return newState;
     default:

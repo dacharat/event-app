@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import EventCard from "./EventCard";
 import Filter from "./Filter";
 
@@ -23,7 +23,7 @@ class EventList extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.profile !== prevProps.profile) {
-      this.setState({ eventFilter: this.props.profile.interest || []});
+      this.setState({ eventFilter: this.props.profile.interest || [] });
     }
   }
 

@@ -4,6 +4,8 @@ import { StyleSheet } from "react-native";
 
 class Toast extends React.Component {
   show = message => {
+    console.log("showed");
+
     this.refs.toast.show(message);
   };
   render() {

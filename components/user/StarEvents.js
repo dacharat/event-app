@@ -5,7 +5,8 @@ import StarEventCard from "./StarEventCard";
 
 const StarEvents = ({ profile, events, navigation }) => {
   let stars = profile.stars || [];
-  stars = stars.filter(star => !profile.join.includes(star));
+  let joins = profile.join || []
+  stars = stars.filter(star => !joins.includes(star));
   return (
     <ScrollView style={styles.eventContent}>
       {stars.map(star => (
